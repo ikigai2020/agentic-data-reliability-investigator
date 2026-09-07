@@ -1,0 +1,19 @@
+{
+  "scenario_id": "diagnosed_late_source_arrival",
+  "title": "Late source arrival (FR-1301 #2)",
+  "fr1301_index": 2,
+  "severity": "high",
+  "expected_verification": "verified",
+  "expected_outcome": "diagnosed",
+  "expected_root_cause_category": "source_data",
+  "required_evidence_tools": ["get_upstream_dependencies", "get_processing_watermark"],
+  "forbidden_outcomes": ["not_an_incident"],
+  "specialist_participation": ["pipeline_investigator", "data_investigator"],
+  "retrieval_behavior": "rejected",
+  "max_operational_calls": 8,
+  "escalation_expected": false,
+  "risk": {"data_sensitivity": "low", "high_impact": false},
+  "expected_risk_tier": "medium",
+  "expected_release_status": "released",
+  "notes": "A different root cause wins on a symptom identical to scenario 1 — reconciliation clears the transformation, and a late dependency plus a large watermark lag carry source_data."
+}

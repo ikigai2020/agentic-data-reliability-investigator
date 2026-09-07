@@ -1,0 +1,9 @@
+{
+  "runbooks": {
+    "orders_daily": "Runbook (context only): For orders_daily volume drops, first reconcile source vs target row counts, then review recent transformation/filter changes before suspecting upstream source loss."
+  },
+  "schemas": {
+    "orders_fact": "orders_fact schema v7: order_id (string, pk), customer_id (string), amount (float), is_valid (bool), order_ts (timestamp)."
+  },
+  "incidents": {}
+}

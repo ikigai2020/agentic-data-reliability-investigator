@@ -1,0 +1,13 @@
+{
+  "incident_id": "INC-1004",
+  "dataset": "signups_fact",
+  "pipeline": "signups_daily",
+  "symptom_type": "volume_spike",
+  "observed_value": 41200,
+  "expected_value": 22000,
+  "observed_change_pct": 87.3,
+  "window_start": "2026-08-24T00:00:00Z",
+  "window_end": "2026-08-25T00:00:00Z",
+  "detected_at": "2026-08-25T04:10:00Z",
+  "severity": "medium"
+}

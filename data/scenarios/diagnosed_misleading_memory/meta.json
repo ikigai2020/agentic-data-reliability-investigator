@@ -1,0 +1,19 @@
+{
+  "scenario_id": "diagnosed_misleading_memory",
+  "title": "Misleading historical incident from another pipeline (FR-1301 #5)",
+  "fr1301_index": 5,
+  "severity": "high",
+  "expected_verification": "verified",
+  "expected_outcome": "diagnosed",
+  "expected_root_cause_category": "data_quality",
+  "required_evidence_tools": ["get_quality_results", "get_table_metrics"],
+  "forbidden_outcomes": ["not_an_incident", "inconclusive"],
+  "specialist_participation": ["data_investigator", "pipeline_investigator"],
+  "retrieval_behavior": "rejected",
+  "max_operational_calls": 8,
+  "escalation_expected": false,
+  "risk": {"data_sensitivity": "low", "high_impact": false},
+  "expected_risk_tier": "medium",
+  "expected_release_status": "released",
+  "notes": "INC-HIST-0055 is the trap: same dataset, same symptom, confirmed, recent, and highly relevant — but a different pipeline with a different loader, and it blames schema_contract. The trust gate rejects it on metadata before it can touch hypothesis order, and the diagnosis rests on current evidence alone (§23.3). Nothing about the rejection depends on the model reading the document carefully."
+}

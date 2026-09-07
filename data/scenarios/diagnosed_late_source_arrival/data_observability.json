@@ -1,0 +1,46 @@
+{
+  "table_metrics": {
+    "shipments_fact": {
+      "row_count": 9000,
+      "expected_row_count": 40000,
+      "freshness_seconds": 10800.0,
+      "last_loaded_at": "2026-08-21T02:10:00Z",
+      "null_rate": {"carrier_id": 0.0, "weight_kg": 0.0},
+      "duplicate_count": 0,
+      "distribution": {"weight_kg_mean": 12.4}
+    },
+    "shipments_fact_source": {
+      "row_count": 9000,
+      "expected_row_count": 40000,
+      "freshness_seconds": 32400.0,
+      "last_loaded_at": "2026-08-20T18:00:00Z",
+      "null_rate": {"carrier_id": 0.0},
+      "duplicate_count": 0,
+      "distribution": {}
+    }
+  },
+  "quality_results": {
+    "shipments_fact": {
+      "results": [
+        {"test_name": "not_null_carrier_id", "column": "carrier_id", "status": "pass", "observed_value": 0, "threshold": 0},
+        {"test_name": "unique_shipment_id", "column": "shipment_id", "status": "pass", "observed_value": 0, "threshold": 0}
+      ]
+    }
+  },
+  "schema_changes": {
+    "shipments_fact": {"from_version": "v3", "to_version": "v3", "changes": [], "breaking": false}
+  },
+  "reconciliation": {
+    "shipments_fact_source::shipments_fact": {
+      "source_count": 9000,
+      "target_count": 9000,
+      "difference": 0,
+      "difference_pct": 0.0,
+      "rows_dropped_by_filter": 0,
+      "notes": "source and target agree; the shortfall is upstream of this pipeline"
+    }
+  },
+  "transformation_changes": {
+    "shipments_daily": {"changes": []}
+  }
+}

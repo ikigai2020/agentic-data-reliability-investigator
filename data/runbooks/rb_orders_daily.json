@@ -1,0 +1,18 @@
+{
+  "doc_id": "RB-ORDERS-DAILY",
+  "chunk_id": "RB-ORDERS-DAILY#0",
+  "type": "runbook",
+  "title": "Runbook: orders_daily volume anomalies",
+  "text": "Approved runbook for orders_daily volume_drop on orders_fact: first reconcile source vs target row counts, then review recent transformation/filter changes, and only then suspect upstream source loss or orchestration failures.",
+  "pipeline": "orders_daily",
+  "dataset": "orders_fact",
+  "category": null,
+  "symptom_type": "volume_drop",
+  "environment": "prod",
+  "version": "v7",
+  "resolution_status": null,
+  "confirmation_status": "approved",
+  "created_at": "2026-04-01T00:00:00Z",
+  "reviewed_at": "2026-06-20T00:00:00Z",
+  "expires_at": null
+}

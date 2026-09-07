@@ -1,0 +1,886 @@
+{
+  "journal_version": "1",
+  "investigation_id": "inv_044087183b58",
+  "trace_id": "trace_a5ba1022d06a",
+  "scenario_id": "diagnosed_transformation_filter",
+  "versions": {
+    "engine": "deterministic",
+    "provider": null,
+    "model": null,
+    "prompts_digest": "ff781dbfedec",
+    "corpus_digest": "5cf7d0ee38fb",
+    "corpus_documents": 5,
+    "tools_digest": "05ede04a4fb1",
+    "policy_digest": "e65ad82bcf6a",
+    "beam_policy": {
+      "prune_threshold": 5,
+      "min_diverse_branches": 2,
+      "max_operational_calls": 8,
+      "max_rounds": 4,
+      "max_calls_per_task": 3,
+      "beam_width": 3,
+      "max_branch_depth": 4,
+      "max_candidate_actions": 2
+    }
+  },
+  "tracing": null,
+  "outcome": "diagnosed",
+  "release_status": "released",
+  "rounds_used": 1,
+  "stages": [
+    {
+      "stage_id": "000-initialize_investigation",
+      "sequence": 0,
+      "node": "initialize_investigation",
+      "round_number": 0,
+      "started_at": "2026-09-06T21:50:50.333475Z",
+      "duration_ms": 0,
+      "summary": "opened inv_044087183b58 \u2014 budget 8 call(s) / 4 round(s)",
+      "delta": {
+        "investigation_id": "inv_044087183b58",
+        "trace_id": "trace_a5ba1022d06a",
+        "round_number": 0,
+        "budgets": {
+          "max_operational_calls": 8,
+          "max_rounds": 4,
+          "calls_used": 0
+        },
+        "failures": [],
+        "escalation_required": false
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "001-parse_alert",
+      "sequence": 1,
+      "node": "parse_alert",
+      "round_number": 0,
+      "started_at": "2026-09-06T21:50:50.334327Z",
+      "duration_ms": 0,
+      "summary": "parsed INC-1001 (volume_drop)",
+      "delta": {
+        "alert": {
+          "incident_id": "INC-1001",
+          "dataset": "orders_fact",
+          "pipeline": "orders_daily",
+          "symptom_type": "volume_drop",
+          "observed_value": 12000,
+          "expected_value": 50000,
+          "observed_change_pct": -76.0,
+          "window_start": "2026-08-15T00:00:00Z",
+          "window_end": "2026-08-16T00:00:00Z",
+          "detected_at": "2026-08-16T02:00:00Z",
+          "severity": "high"
+        },
+        "scenario_id": "diagnosed_transformation_filter"
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "002-verify_incident",
+      "sequence": 2,
+      "node": "verify_incident",
+      "round_number": 0,
+      "started_at": "2026-09-06T21:50:50.336105Z",
+      "duration_ms": 24,
+      "summary": "verified: row_count=12000 vs expected=50000 (drop)",
+      "delta": {
+        "verification_status": "verified",
+        "verification_detail": {
+          "tool_name": "get_table_metrics",
+          "role": "data_investigator",
+          "status": "ok",
+          "request_id": "req_3e813f0ac290476e",
+          "explanation": "row_count=12000 vs expected=50000 (drop)"
+        },
+        "evidence": [
+          {
+            "id": "ev_verification_INC-1001",
+            "tool": "get_table_metrics",
+            "source_kind": "current_operational",
+            "summary": "verification: row_count=12000 vs expected=50000 (drop) -> verified",
+            "supports": [],
+            "contradicts": [],
+            "discriminating": false
+          }
+        ]
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "003-commander_generate_hypotheses",
+      "sequence": 3,
+      "node": "commander_generate_hypotheses",
+      "round_number": 0,
+      "started_at": "2026-09-06T21:50:50.362709Z",
+      "duration_ms": 0,
+      "summary": "4 hypotheses: transformation_logic, source_data, orchestration, data_quality",
+      "delta": {
+        "hypotheses": [
+          {
+            "id": "H1-transformation_logic",
+            "category": "transformation_logic",
+            "rank": 1,
+            "status": "active"
+          },
+          {
+            "id": "H2-source_data",
+            "category": "source_data",
+            "rank": 2,
+            "status": "active"
+          },
+          {
+            "id": "H3-orchestration",
+            "category": "orchestration",
+            "rank": 3,
+            "status": "active"
+          },
+          {
+            "id": "H4-data_quality",
+            "category": "data_quality",
+            "rank": 4,
+            "status": "active"
+          }
+        ],
+        "branches": [
+          {
+            "id": "B-H1-transformation_logic",
+            "status": "active",
+            "score": null,
+            "depth": 0,
+            "prune_reason": null
+          },
+          {
+            "id": "B-H2-source_data",
+            "status": "active",
+            "score": null,
+            "depth": 0,
+            "prune_reason": null
+          },
+          {
+            "id": "B-H3-orchestration",
+            "status": "active",
+            "score": null,
+            "depth": 0,
+            "prune_reason": null
+          },
+          {
+            "id": "B-H4-data_quality",
+            "status": "active",
+            "score": null,
+            "depth": 0,
+            "prune_reason": null
+          }
+        ],
+        "reasoning_fallbacks": []
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "004-retrieve_context",
+      "sequence": 4,
+      "node": "retrieve_context",
+      "round_number": 0,
+      "started_at": "2026-09-06T21:50:50.363738Z",
+      "duration_ms": 0,
+      "summary": "5 candidate document(s)",
+      "delta": {
+        "retrieved_items": [
+          {
+            "doc_id": "INC-HIST-0003",
+            "score": 0.7029
+          },
+          {
+            "doc_id": "INC-HIST-0007",
+            "score": 0.6757
+          },
+          {
+            "doc_id": "RB-ORDERS-DAILY",
+            "score": 0.6738
+          },
+          {
+            "doc_id": "INC-HIST-0042",
+            "score": 0.5163
+          },
+          {
+            "doc_id": "INC-HIST-0055",
+            "score": 0.3014
+          }
+        ]
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "005-apply_retrieval_trust_gate",
+      "sequence": 5,
+      "node": "apply_retrieval_trust_gate",
+      "round_number": 0,
+      "started_at": "2026-09-06T21:50:50.365391Z",
+      "duration_ms": 0,
+      "summary": "2 accepted, 3 rejected -> reordered",
+      "delta": {
+        "trust_decisions": [
+          {
+            "doc_id": "INC-HIST-0003",
+            "accepted": false,
+            "gates": {
+              "relevance": true,
+              "permitted_type": true,
+              "confirmed": false,
+              "metadata_match": true,
+              "not_stale": false,
+              "no_conflict": true
+            },
+            "reasons": [
+              "not confirmed precedent (confirmation=confirmed, resolution=superseded)",
+              "stale or expired"
+            ]
+          },
+          {
+            "doc_id": "INC-HIST-0007",
+            "accepted": true,
+            "gates": {
+              "relevance": true,
+              "permitted_type": true,
+              "confirmed": true,
+              "metadata_match": true,
+              "not_stale": true,
+              "no_conflict": true
+            },
+            "reasons": [
+              "all trust gates passed"
+            ]
+          },
+          {
+            "doc_id": "RB-ORDERS-DAILY",
+            "accepted": true,
+            "gates": {
+              "relevance": true,
+              "permitted_type": true,
+              "confirmed": true,
+              "metadata_match": true,
+              "not_stale": true,
+              "no_conflict": true
+            },
+            "reasons": [
+              "all trust gates passed"
+            ]
+          },
+          {
+            "doc_id": "INC-HIST-0042",
+            "accepted": false,
+            "gates": {
+              "relevance": true,
+              "permitted_type": true,
+              "confirmed": true,
+              "metadata_match": false,
+              "not_stale": true,
+              "no_conflict": true
+            },
+            "reasons": [
+              "pipeline mismatch (doc=payments_daily, alert=orders_daily)"
+            ]
+          },
+          {
+            "doc_id": "INC-HIST-0055",
+            "accepted": false,
+            "gates": {
+              "relevance": true,
+              "permitted_type": true,
+              "confirmed": true,
+              "metadata_match": false,
+              "not_stale": true,
+              "no_conflict": true
+            },
+            "reasons": [
+              "pipeline mismatch (doc=payments_daily, alert=orders_daily)"
+            ]
+          }
+        ],
+        "retrieval_influence": {
+          "kind": "reordered",
+          "detail": "promoted ['H2-source_data'] from confirmed historical incident(s)",
+          "promoted_hypotheses": [
+            "H2-source_data"
+          ],
+          "accepted_doc_ids": [
+            "INC-HIST-0007",
+            "RB-ORDERS-DAILY"
+          ],
+          "rejected_doc_ids": [
+            "INC-HIST-0003",
+            "INC-HIST-0042",
+            "INC-HIST-0055"
+          ],
+          "order_before": [
+            "H1-transformation_logic",
+            "H2-source_data",
+            "H3-orchestration",
+            "H4-data_quality"
+          ],
+          "order_after": [
+            "H2-source_data",
+            "H1-transformation_logic",
+            "H3-orchestration",
+            "H4-data_quality"
+          ]
+        },
+        "evidence": [
+          {
+            "id": "ev_mem_INC-HIST-0007",
+            "tool": null,
+            "source_kind": "retrieved_incident",
+            "summary": "historical incident: orders_daily volume drop traced to upstream source shortfall",
+            "supports": [],
+            "contradicts": [],
+            "discriminating": false
+          },
+          {
+            "id": "ev_mem_RB-ORDERS-DAILY",
+            "tool": null,
+            "source_kind": "runbook",
+            "summary": "historical runbook: Runbook: orders_daily volume anomalies",
+            "supports": [],
+            "contradicts": [],
+            "discriminating": false
+          }
+        ],
+        "hypotheses": [
+          {
+            "id": "H2-source_data",
+            "category": "source_data",
+            "rank": 1,
+            "status": "active"
+          },
+          {
+            "id": "H1-transformation_logic",
+            "category": "transformation_logic",
+            "rank": 2,
+            "status": "active"
+          },
+          {
+            "id": "H3-orchestration",
+            "category": "orchestration",
+            "rank": 3,
+            "status": "active"
+          },
+          {
+            "id": "H4-data_quality",
+            "category": "data_quality",
+            "rank": 4,
+            "status": "active"
+          }
+        ]
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "006-commander_plan_round",
+      "sequence": 6,
+      "node": "commander_plan_round",
+      "round_number": 1,
+      "started_at": "2026-09-06T21:50:50.366640Z",
+      "duration_ms": 0,
+      "summary": "round 1: 3 task(s) \u2014 pipeline_investigator:get_upstream_dependencies+get_processing_watermark, data_investigator:compare_source_and_target+get_recent_transformation_changes, pipeline_investigator:get_pipeline_run_status+get_task_failures",
+      "delta": {
+        "tasks": [
+          {
+            "id": "T1-H2-source_data",
+            "agent": "pipeline_investigator",
+            "tools": [
+              "get_upstream_dependencies",
+              "get_processing_watermark"
+            ],
+            "status": "pending"
+          },
+          {
+            "id": "T1-H1-transformation_logic",
+            "agent": "data_investigator",
+            "tools": [
+              "compare_source_and_target",
+              "get_recent_transformation_changes"
+            ],
+            "status": "pending"
+          },
+          {
+            "id": "T1-H3-orchestration",
+            "agent": "pipeline_investigator",
+            "tools": [
+              "get_pipeline_run_status",
+              "get_task_failures"
+            ],
+            "status": "pending"
+          }
+        ],
+        "round_number": 1,
+        "beam_selected_ids": [
+          "B-H2-source_data",
+          "B-H1-transformation_logic",
+          "B-H3-orchestration"
+        ],
+        "reasoning_fallbacks": []
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "007-dispatch_specialists",
+      "sequence": 7,
+      "node": "dispatch_specialists",
+      "round_number": 1,
+      "started_at": "2026-09-06T21:50:50.367694Z",
+      "duration_ms": 103,
+      "summary": "6 observation(s), 6 call(s) used",
+      "delta": {
+        "evidence": [
+          {
+            "id": "ev_T1-H2-source_data_get_upstream_dependencies",
+            "tool": "get_upstream_dependencies",
+            "source_kind": "current_operational",
+            "summary": "all upstream dependencies succeeded on time",
+            "supports": [],
+            "contradicts": [
+              "H2-source_data"
+            ],
+            "discriminating": true
+          },
+          {
+            "id": "ev_T1-H2-source_data_get_processing_watermark",
+            "tool": "get_processing_watermark",
+            "source_kind": "current_operational",
+            "summary": "processing lag 3600s (within tolerance)",
+            "supports": [],
+            "contradicts": [],
+            "discriminating": false
+          },
+          {
+            "id": "ev_T1-H1-transformation_logic_compare_source_and_target",
+            "tool": "compare_source_and_target",
+            "source_kind": "current_operational",
+            "summary": "38000 rows dropped at transform stage (source intact)",
+            "supports": [
+              "H1-transformation_logic"
+            ],
+            "contradicts": [
+              "H2-source_data"
+            ],
+            "discriminating": true
+          },
+          {
+            "id": "ev_T1-H1-transformation_logic_get_recent_transformation_changes",
+            "tool": "get_recent_transformation_changes",
+            "source_kind": "current_operational",
+            "summary": "1 recent transformation change(s)",
+            "supports": [
+              "H1-transformation_logic"
+            ],
+            "contradicts": [],
+            "discriminating": true
+          },
+          {
+            "id": "ev_T1-H3-orchestration_get_pipeline_run_status",
+            "tool": "get_pipeline_run_status",
+            "source_kind": "current_operational",
+            "summary": "pipeline run succeeded and is terminal",
+            "supports": [],
+            "contradicts": [
+              "H3-orchestration"
+            ],
+            "discriminating": false
+          },
+          {
+            "id": "ev_T1-H3-orchestration_get_task_failures",
+            "tool": "get_task_failures",
+            "source_kind": "current_operational",
+            "summary": "no task failures",
+            "supports": [],
+            "contradicts": [
+              "H3-orchestration"
+            ],
+            "discriminating": false
+          }
+        ],
+        "findings": [
+          {
+            "task_id": "T1-H2-source_data",
+            "agent": "pipeline_investigator",
+            "status": "complete"
+          },
+          {
+            "task_id": "T1-H1-transformation_logic",
+            "agent": "data_investigator",
+            "status": "complete"
+          },
+          {
+            "task_id": "T1-H3-orchestration",
+            "agent": "pipeline_investigator",
+            "status": "complete"
+          }
+        ],
+        "failures": [],
+        "tasks": [
+          {
+            "id": "T1-H2-source_data",
+            "agent": "pipeline_investigator",
+            "tools": [
+              "get_upstream_dependencies",
+              "get_processing_watermark"
+            ],
+            "status": "completed"
+          },
+          {
+            "id": "T1-H1-transformation_logic",
+            "agent": "data_investigator",
+            "tools": [
+              "compare_source_and_target",
+              "get_recent_transformation_changes"
+            ],
+            "status": "completed"
+          },
+          {
+            "id": "T1-H3-orchestration",
+            "agent": "pipeline_investigator",
+            "tools": [
+              "get_pipeline_run_status",
+              "get_task_failures"
+            ],
+            "status": "completed"
+          }
+        ],
+        "budgets": {
+          "max_operational_calls": 8,
+          "max_rounds": 4,
+          "calls_used": 6
+        },
+        "reasoning_fallbacks": []
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "008-merge_specialist_results",
+      "sequence": 8,
+      "node": "merge_specialist_results",
+      "round_number": 1,
+      "started_at": "2026-09-06T21:50:50.472405Z",
+      "duration_ms": 0,
+      "summary": "9 evidence, 3 findings",
+      "delta": {},
+      "llm_calls": []
+    },
+    {
+      "stage_id": "009-critic_review",
+      "sequence": 9,
+      "node": "critic_review",
+      "round_number": 1,
+      "started_at": "2026-09-06T21:50:50.473054Z",
+      "duration_ms": 4,
+      "summary": "critic recommends 'diagnosed' (1 gap(s), 3 prune(s))",
+      "delta": {
+        "critic_reviews": [
+          {
+            "id": "cr_r1",
+            "round": 1,
+            "recommendation": "diagnosed",
+            "rationale": "round 1: 0 unsupported claim(s), 1 evidence gap(s), 3 prune / 0 reopen recommendation(s); advisory stop recommendation=diagnosed.",
+            "unsupported_claims": [],
+            "evidence_gaps": [
+              "H4-data_quality: never tested by a current observation"
+            ],
+            "pruning_recommendations": [
+              "B-H2-source_data: falsified by a discriminating observation",
+              "B-H3-orchestration: score 2 below threshold 5",
+              "B-H4-data_quality: score 4 below threshold 5"
+            ],
+            "reopening_recommendations": [],
+            "strongest_hypothesis_id": "H1-transformation_logic",
+            "strongest_competitor_id": "H2-source_data"
+          }
+        ],
+        "branches": [
+          {
+            "id": "B-H1-transformation_logic",
+            "status": "active",
+            "score": null,
+            "depth": 1,
+            "prune_reason": null
+          },
+          {
+            "id": "B-H2-source_data",
+            "status": "active",
+            "score": null,
+            "depth": 1,
+            "prune_reason": null
+          },
+          {
+            "id": "B-H3-orchestration",
+            "status": "active",
+            "score": null,
+            "depth": 1,
+            "prune_reason": null
+          },
+          {
+            "id": "B-H4-data_quality",
+            "status": "active",
+            "score": null,
+            "depth": 0,
+            "prune_reason": null
+          }
+        ],
+        "reasoning_fallbacks": []
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "010-apply_branch_policy",
+      "sequence": 10,
+      "node": "apply_branch_policy",
+      "round_number": 1,
+      "started_at": "2026-09-06T21:50:50.478668Z",
+      "duration_ms": 0,
+      "summary": "2 selected, 2 pruned",
+      "delta": {
+        "branches": [
+          {
+            "id": "B-H1-transformation_logic",
+            "status": "selected",
+            "score": 6.0,
+            "depth": 1,
+            "prune_reason": null
+          },
+          {
+            "id": "B-H2-source_data",
+            "status": "pruned",
+            "score": -1.0,
+            "depth": 1,
+            "prune_reason": "directly falsified by a discriminating current observation"
+          },
+          {
+            "id": "B-H3-orchestration",
+            "status": "pruned",
+            "score": 2.0,
+            "depth": 1,
+            "prune_reason": "score 2 below threshold 5"
+          },
+          {
+            "id": "B-H4-data_quality",
+            "status": "selected",
+            "score": 4.0,
+            "depth": 0,
+            "prune_reason": null
+          }
+        ],
+        "beam_selected_ids": [
+          "B-H1-transformation_logic",
+          "B-H4-data_quality"
+        ],
+        "critic_disagreements": [
+          "round 1: critic recommended pruning B-H4-data_quality; deterministic policy kept it"
+        ],
+        "branch_scores": {
+          "B-H1-transformation_logic": {
+            "total": 6,
+            "consistency": 3,
+            "discriminating_value": 0,
+            "support_independence": 2,
+            "retrieved_context": 0,
+            "cost_efficiency": 1,
+            "contradiction_penalty": 0,
+            "reasons": [
+              "consistency 3: 2 independent supporting tool(s), no contradiction",
+              "independence 2: support from ['compare_source_and_target', 'get_recent_transformation_changes']",
+              "discriminating 0: next action get_table_metrics",
+              "cost_efficiency 1: next action affordable within budget"
+            ]
+          },
+          "B-H2-source_data": {
+            "total": -1,
+            "consistency": 0,
+            "discriminating_value": 0,
+            "support_independence": 0,
+            "retrieved_context": 1,
+            "cost_efficiency": 1,
+            "contradiction_penalty": -3,
+            "reasons": [
+              "consistency 0: current evidence contradicts this hypothesis",
+              "independence 0: support from no tools",
+              "discriminating 0: next action get_pipeline_run_status",
+              "retrieved_context 1: accepted memory matches this category",
+              "cost_efficiency 1: next action affordable within budget",
+              "penalty -3: critical current contradiction"
+            ]
+          },
+          "B-H3-orchestration": {
+            "total": 2,
+            "consistency": 0,
+            "discriminating_value": 1,
+            "support_independence": 0,
+            "retrieved_context": 0,
+            "cost_efficiency": 1,
+            "contradiction_penalty": 0,
+            "reasons": [
+              "consistency 0: current evidence contradicts this hypothesis",
+              "independence 0: support from no tools",
+              "discriminating 1: next action get_execution_logs",
+              "cost_efficiency 1: next action affordable within budget"
+            ]
+          },
+          "B-H4-data_quality": {
+            "total": 4,
+            "consistency": 1,
+            "discriminating_value": 2,
+            "support_independence": 0,
+            "retrieved_context": 0,
+            "cost_efficiency": 1,
+            "contradiction_penalty": 0,
+            "reasons": [
+              "consistency 1: 0 independent supporting tool(s), no contradiction",
+              "independence 0: support from no tools",
+              "discriminating 2: next action get_quality_results",
+              "cost_efficiency 1: next action affordable within budget"
+            ]
+          }
+        },
+        "hypotheses": [
+          {
+            "id": "H2-source_data",
+            "category": "source_data",
+            "rank": 1,
+            "status": "rejected"
+          },
+          {
+            "id": "H3-orchestration",
+            "category": "orchestration",
+            "rank": 3,
+            "status": "weakened"
+          }
+        ]
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "011-evaluate_stop",
+      "sequence": 11,
+      "node": "evaluate_stop",
+      "round_number": 1,
+      "started_at": "2026-09-06T21:50:50.480502Z",
+      "duration_ms": 0,
+      "summary": "diagnosed (stop) \u2014 leading hypothesis meets all FR-900 diagnosis criteria",
+      "delta": {
+        "outcome": "diagnosed",
+        "stop_reason": "leading hypothesis meets all FR-900 diagnosis criteria",
+        "confidence": "moderate",
+        "escalation_required": false,
+        "leading_hypothesis_id": "H1-transformation_logic",
+        "strongest_competitor_id": "H2-source_data",
+        "diagnosis_checks": {
+          "verified": true,
+          "two_independent_current_supports": true,
+          "at_least_one_discriminating": true,
+          "strongest_competitor_weakened": true,
+          "no_critical_current_contradiction": true,
+          "leading_has_evidence": true
+        },
+        "should_continue": false,
+        "rounds_used": 1,
+        "critic_disagreements": [],
+        "disagreement_checks_used": 0,
+        "risk_policy_inputs": {
+          "data_sensitivity": "low",
+          "high_impact": false
+        },
+        "hypotheses": [
+          {
+            "id": "H1-transformation_logic",
+            "category": "transformation_logic",
+            "rank": 2,
+            "status": "supported"
+          },
+          {
+            "id": "H2-source_data",
+            "category": "source_data",
+            "rank": 1,
+            "status": "rejected"
+          },
+          {
+            "id": "H3-orchestration",
+            "category": "orchestration",
+            "rank": 3,
+            "status": "rejected"
+          },
+          {
+            "id": "H4-data_quality",
+            "category": "data_quality",
+            "rank": 4,
+            "status": "active"
+          }
+        ]
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "012-commander_compose_report",
+      "sequence": 12,
+      "node": "commander_compose_report",
+      "round_number": 1,
+      "started_at": "2026-09-06T21:50:50.482539Z",
+      "duration_ms": 0,
+      "summary": "report composed: diagnosed / transformation_logic, 2 supporting observation(s)",
+      "delta": {
+        "report": "<omitted: held in full elsewhere>"
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "013-validate_grounding",
+      "sequence": 13,
+      "node": "validate_grounding",
+      "round_number": 1,
+      "started_at": "2026-09-06T21:50:50.483663Z",
+      "duration_ms": 0,
+      "summary": "grounded",
+      "delta": {},
+      "llm_calls": []
+    },
+    {
+      "stage_id": "014-classify_risk",
+      "sequence": 14,
+      "node": "classify_risk",
+      "round_number": 1,
+      "started_at": "2026-09-06T21:50:50.484891Z",
+      "duration_ms": 0,
+      "summary": "risk medium -> released (elevated incident severity (high))",
+      "delta": {
+        "risk_tier": "medium",
+        "risk_reasons": [
+          "elevated incident severity (high)",
+          "medium risk: independent validation required (FR-900 satisfied)"
+        ],
+        "release_status": "released",
+        "blocked_attempts": 0,
+        "report": "<omitted: held in full elsewhere>"
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "015-prepare_human_escalation",
+      "sequence": 15,
+      "node": "prepare_human_escalation",
+      "round_number": 1,
+      "started_at": "2026-09-06T21:50:50.486178Z",
+      "duration_ms": 0,
+      "summary": "no escalation",
+      "delta": {},
+      "llm_calls": []
+    },
+    {
+      "stage_id": "016-persist_result",
+      "sequence": 16,
+      "node": "persist_result",
+      "round_number": 1,
+      "started_at": "2026-09-06T21:50:50.487040Z",
+      "duration_ms": 1,
+      "summary": "persisted inv_044087183b58",
+      "delta": {},
+      "llm_calls": []
+    }
+  ]
+}

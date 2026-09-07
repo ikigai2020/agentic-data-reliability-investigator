@@ -1,0 +1,28 @@
+{
+  "scenario_id": "diagnosed_transformation_filter",
+  "title": "Transformation filter regression (FR-1301 #1)",
+  "fr1301_index": 1,
+  "expected_verification": "verified",
+  "expected_outcome": "diagnosed",
+  "expected_root_cause_category": "transformation_logic",
+  "required_evidence_tools": [
+    "compare_source_and_target",
+    "get_recent_transformation_changes"
+  ],
+  "forbidden_outcomes": [
+    "not_an_incident"
+  ],
+  "specialist_participation": [
+    "data_investigator",
+    "pipeline_investigator"
+  ],
+  "retrieval_behavior": "not_required",
+  "max_operational_calls": 8,
+  "escalation_expected": false,
+  "risk": {
+    "data_sensitivity": "low",
+    "high_impact": false
+  },
+  "expected_risk_tier": "medium",
+  "expected_release_status": "released"
+}

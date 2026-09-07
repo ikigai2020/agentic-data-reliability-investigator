@@ -1,0 +1,50 @@
+{
+  "table_metrics": {
+    "orders_fact": {
+      "row_count": 12000,
+      "expected_row_count": 50000,
+      "freshness_seconds": 3600.0,
+      "last_loaded_at": "2026-08-16T01:12:30Z",
+      "null_rate": {"customer_id": 0.0, "amount": 0.0},
+      "duplicate_count": 0,
+      "distribution": {"amount_mean": 42.5}
+    },
+    "orders_fact_source": {
+      "row_count": 50000,
+      "expected_row_count": 50000,
+      "freshness_seconds": 3600.0,
+      "last_loaded_at": "2026-08-16T00:50:00Z",
+      "null_rate": {"customer_id": 0.0},
+      "duplicate_count": 0,
+      "distribution": {}
+    }
+  },
+  "quality_results": {
+    "orders_fact": {
+      "results": [
+        {"test_name": "not_null_customer_id", "column": "customer_id", "status": "pass", "observed_value": 0, "threshold": 0},
+        {"test_name": "unique_order_id", "column": "order_id", "status": "pass", "observed_value": 0, "threshold": 0}
+      ]
+    }
+  },
+  "schema_changes": {
+    "orders_fact": {"from_version": "v7", "to_version": "v7", "changes": [], "breaking": false}
+  },
+  "reconciliation": {
+    "orders_fact_source::orders_fact": {
+      "source_count": 50000,
+      "target_count": 12000,
+      "difference": 38000,
+      "difference_pct": -76.0,
+      "rows_dropped_by_filter": 38000,
+      "notes": "38000 rows removed at transform_orders filter stage"
+    }
+  },
+  "transformation_changes": {
+    "orders_daily": {
+      "changes": [
+        {"change_id": "chg-556", "author": "a.eng", "committed_at": "2026-08-15T18:20:00Z", "summary": "tighten is_valid filter on orders", "affected_columns": ["is_valid"], "diff_summary": "WHERE is_valid = true (previously included NULL is_valid)"}
+      ]
+    }
+  }
+}

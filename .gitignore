@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Env / secrets (NFR-006)
+.env
+
+# Runtime outputs. Curated examples live in examples/ and are tracked.
+outputs/*.json
+
+# Checkpoint database (FR-804) — regenerated per run
+data/checkpoints/*.sqlite
+data/checkpoints/*.sqlite-*
+
+# Runtime governance artifacts (FR-1108/1109). The hand-authored corpus fixtures
+# (inc_hist_*.json, rb_*.json) are tracked; documents promoted from actual runs are not.
+data/reviews/*.json
+data/incidents/INC-inv_*.json
+data/backlog/imp_*.json
+evaluations/*.json
+
+# Local editor/agent settings
+.claude/settings.local.json
+
+# OS
+.DS_Store
+
+# Run journals (M5.1) — regenerated per run
+outputs/journal/*.json
+
+# Requirements specification — kept locally, never published. It is not this
+# repository's to license, and the README carries the substance it needs.
+Agentic_Data_Reliability_Investigator_Functional_Requirements.md

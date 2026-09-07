@@ -1,0 +1,38 @@
+{
+  "table_metrics": {
+    "signups_fact": {
+      "row_count": 41200,
+      "expected_row_count": 40800,
+      "freshness_seconds": 2400.0,
+      "last_loaded_at": "2026-08-25T03:30:00Z",
+      "null_rate": {"signup_id": 0.0, "channel": 0.004},
+      "duplicate_count": 0,
+      "distribution": {"channel_paid_social": 0.61, "channel_organic": 0.39}
+    }
+  },
+  "quality_results": {
+    "signups_fact": {
+      "results": [
+        {"test_name": "not_null_signup_id", "column": "signup_id", "status": "pass", "observed_value": 0, "threshold": 0},
+        {"test_name": "unique_signup_id", "column": "signup_id", "status": "pass", "observed_value": 0, "threshold": 0},
+        {"test_name": "accepted_values_channel", "column": "channel", "status": "pass", "observed_value": 0, "threshold": 0}
+      ]
+    }
+  },
+  "schema_changes": {
+    "signups_fact": {"from_version": "v2", "to_version": "v2", "changes": [], "breaking": false}
+  },
+  "reconciliation": {
+    "signups_fact_source::signups_fact": {
+      "source_count": 41200,
+      "target_count": 41200,
+      "difference": 0,
+      "difference_pct": 0.0,
+      "rows_dropped_by_filter": 0,
+      "notes": "source and target reconcile exactly"
+    }
+  },
+  "transformation_changes": {
+    "signups_daily": {"changes": []}
+  }
+}

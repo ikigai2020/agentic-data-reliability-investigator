@@ -1,0 +1,375 @@
+{
+  "release_status": "released",
+  "report": {
+    "investigation_id": "inv_4edd2e6f83f5",
+    "alert": {
+      "incident_id": "INC-2002",
+      "dataset": "returns_fact",
+      "pipeline": "returns_daily",
+      "symptom_type": "volume_drop",
+      "observed_value": 8000,
+      "expected_value": 20000,
+      "observed_change_pct": -60.0,
+      "window_start": "2026-08-15T00:00:00Z",
+      "window_end": "2026-08-16T00:00:00Z",
+      "detected_at": "2026-08-16T03:00:00Z",
+      "severity": "medium"
+    },
+    "verification": {
+      "status": "verified",
+      "detail": {
+        "tool_name": "get_table_metrics",
+        "role": "data_investigator",
+        "status": "ok",
+        "request_id": "req_33ee6033ad7a46a5",
+        "explanation": "row_count=8000 vs expected=20000 (drop)"
+      }
+    },
+    "outcome": "inconclusive",
+    "stop_reason": "insufficient independent current evidence to diagnose; operational budget also exhausted",
+    "confidence": "not_applicable",
+    "leading_hypothesis": null,
+    "supporting_evidence_ids": [],
+    "contradicting_evidence_ids": [],
+    "strongest_alternative": {
+      "hypothesis_id": "H2-source_data",
+      "category": "source_data",
+      "statement": "Upstream source data feeding returns_fact arrived late, incomplete, or reduced.",
+      "discriminating_question": "Did upstream dependencies deliver complete, on-time data?",
+      "rank": 2,
+      "status": "weakened",
+      "supporting_evidence_ids": [],
+      "contradicting_evidence_ids": [],
+      "origin": "initial_generation"
+    },
+    "historical_context": {
+      "retrieval_influence": {
+        "kind": "rejected",
+        "detail": "all retrieved items rejected by trust gate",
+        "promoted_hypotheses": [],
+        "accepted_doc_ids": [],
+        "rejected_doc_ids": [
+          "INC-HIST-0003",
+          "RB-ORDERS-DAILY",
+          "INC-HIST-0007",
+          "INC-HIST-0042",
+          "INC-HIST-0055"
+        ],
+        "order_before": [
+          "H1-transformation_logic",
+          "H2-source_data",
+          "H3-orchestration",
+          "H4-data_quality"
+        ],
+        "order_after": [
+          "H1-transformation_logic",
+          "H2-source_data",
+          "H3-orchestration",
+          "H4-data_quality"
+        ]
+      },
+      "effect": "rejected",
+      "historical_evidence_ids": [],
+      "note": "historical context may reorder investigation but never establishes the diagnosis"
+    },
+    "tools": {
+      "called": [
+        "compare_source_and_target",
+        "get_pipeline_run_status",
+        "get_processing_watermark",
+        "get_quality_results",
+        "get_recent_transformation_changes",
+        "get_table_metrics",
+        "get_task_failures",
+        "get_upstream_dependencies"
+      ],
+      "unavailable": []
+    },
+    "uncertainty": "insufficient independent current evidence to diagnose; operational budget also exhausted",
+    "recommended_next_checks": [
+      "[transformation_logic] Does source/target reconciliation or a recent transformation change explain the delta?",
+      "[source_data] Did upstream dependencies deliver complete, on-time data?",
+      "[orchestration] Did the pipeline run complete without task failures?",
+      "[data_quality] Do declared quality tests pass for the dataset?"
+    ],
+    "guardrail_and_budget_events": {
+      "operational_calls_used": 8,
+      "max_operational_calls": 8,
+      "failures": [],
+      "diagnosis_checks": {
+        "verified": true,
+        "two_independent_current_supports": false,
+        "at_least_one_discriminating": false,
+        "strongest_competitor_weakened": true,
+        "no_critical_current_contradiction": true,
+        "leading_has_evidence": false
+      },
+      "rounds_used": 2,
+      "critic_disagreements": [
+        "round 1: critic recommended pruning B-H1-transformation_logic; deterministic policy kept it",
+        "round 1: critic recommended pruning B-H4-data_quality; deterministic policy kept it",
+        "round 1: critic recommended 'continue'; deterministic evaluator returned 'inconclusive'",
+        "round 2: critic recommended 'continue'; deterministic evaluator returned 'inconclusive'"
+      ],
+      "reasoning_fallbacks": [],
+      "blocked_tool_attempts": 0
+    },
+    "branches": [
+      {
+        "branch_id": "B-H1-transformation_logic",
+        "hypothesis_id": "H1-transformation_logic",
+        "depth": 2,
+        "score": 1.0,
+        "status": "pruned",
+        "prune_reason": "global operational-call budget exhausted",
+        "action_history": [
+          "compare_source_and_target",
+          "get_recent_transformation_changes",
+          "get_table_metrics"
+        ]
+      },
+      {
+        "branch_id": "B-H2-source_data",
+        "hypothesis_id": "H2-source_data",
+        "depth": 1,
+        "score": 1.0,
+        "status": "pruned",
+        "prune_reason": "score 2 below threshold 5",
+        "action_history": [
+          "get_processing_watermark",
+          "get_upstream_dependencies"
+        ]
+      },
+      {
+        "branch_id": "B-H3-orchestration",
+        "hypothesis_id": "H3-orchestration",
+        "depth": 1,
+        "score": 1.0,
+        "status": "pruned",
+        "prune_reason": "score 2 below threshold 5",
+        "action_history": [
+          "get_pipeline_run_status",
+          "get_task_failures"
+        ]
+      },
+      {
+        "branch_id": "B-H4-data_quality",
+        "hypothesis_id": "H4-data_quality",
+        "depth": 1,
+        "score": 2.0,
+        "status": "pruned",
+        "prune_reason": "global operational-call budget exhausted",
+        "action_history": [
+          "get_quality_results"
+        ]
+      }
+    ],
+    "evidence_index": [
+      {
+        "evidence_id": "ev_verification_INC-2002",
+        "tool_name": "get_table_metrics",
+        "source_kind": "current_operational",
+        "summary": "verification: row_count=8000 vs expected=20000 (drop) -> verified",
+        "supports": [],
+        "contradicts": [],
+        "freshness_status": "current"
+      },
+      {
+        "evidence_id": "ev_T1-H1-transformation_logic_compare_source_and_target",
+        "tool_name": "compare_source_and_target",
+        "source_kind": "current_operational",
+        "summary": "compare_source_and_target: no data (non-committal)",
+        "supports": [],
+        "contradicts": [],
+        "freshness_status": "unknown"
+      },
+      {
+        "evidence_id": "ev_T1-H1-transformation_logic_get_recent_transformation_changes",
+        "tool_name": "get_recent_transformation_changes",
+        "source_kind": "current_operational",
+        "summary": "get_recent_transformation_changes: no data (non-committal)",
+        "supports": [],
+        "contradicts": [],
+        "freshness_status": "unknown"
+      },
+      {
+        "evidence_id": "ev_T1-H2-source_data_get_upstream_dependencies",
+        "tool_name": "get_upstream_dependencies",
+        "source_kind": "current_operational",
+        "summary": "get_upstream_dependencies: no data (non-committal)",
+        "supports": [],
+        "contradicts": [],
+        "freshness_status": "unknown"
+      },
+      {
+        "evidence_id": "ev_T1-H2-source_data_get_processing_watermark",
+        "tool_name": "get_processing_watermark",
+        "source_kind": "current_operational",
+        "summary": "get_processing_watermark: no data (non-committal)",
+        "supports": [],
+        "contradicts": [],
+        "freshness_status": "unknown"
+      },
+      {
+        "evidence_id": "ev_T1-H3-orchestration_get_pipeline_run_status",
+        "tool_name": "get_pipeline_run_status",
+        "source_kind": "current_operational",
+        "summary": "pipeline run succeeded and is terminal",
+        "supports": [],
+        "contradicts": [
+          "H3-orchestration"
+        ],
+        "freshness_status": "current"
+      },
+      {
+        "evidence_id": "ev_T1-H3-orchestration_get_task_failures",
+        "tool_name": "get_task_failures",
+        "source_kind": "current_operational",
+        "summary": "no task failures",
+        "supports": [],
+        "contradicts": [
+          "H3-orchestration"
+        ],
+        "freshness_status": "current"
+      },
+      {
+        "evidence_id": "ev_T2-H1-transformation_logic_get_table_metrics",
+        "tool_name": "get_table_metrics",
+        "source_kind": "current_operational",
+        "summary": "table metrics observed row_count=8000 vs expected=20000",
+        "supports": [],
+        "contradicts": [],
+        "freshness_status": "current"
+      },
+      {
+        "evidence_id": "ev_T2-H4-data_quality_get_quality_results",
+        "tool_name": "get_quality_results",
+        "source_kind": "current_operational",
+        "summary": "get_quality_results: no data (non-committal)",
+        "supports": [],
+        "contradicts": [],
+        "freshness_status": "unknown"
+      }
+    ],
+    "release_status": "released",
+    "risk": {
+      "tier": "low",
+      "reasons": [
+        "read-only, low-impact investigation"
+      ]
+    }
+  },
+  "escalation_package": {
+    "verified_facts": {
+      "verification_status": "verified",
+      "verification_detail": {
+        "tool_name": "get_table_metrics",
+        "role": "data_investigator",
+        "status": "ok",
+        "request_id": "req_33ee6033ad7a46a5",
+        "explanation": "row_count=8000 vs expected=20000 (drop)"
+      },
+      "alert": {
+        "incident_id": "INC-2002",
+        "dataset": "returns_fact",
+        "pipeline": "returns_daily",
+        "symptom_type": "volume_drop",
+        "observed_value": 8000,
+        "expected_value": 20000,
+        "observed_change_pct": -60.0,
+        "window_start": "2026-08-15T00:00:00Z",
+        "window_end": "2026-08-16T00:00:00Z",
+        "detected_at": "2026-08-16T03:00:00Z",
+        "severity": "medium"
+      }
+    },
+    "leading_hypothesis_id": null,
+    "alternative_hypotheses": [
+      {
+        "hypothesis_id": "H1-transformation_logic",
+        "category": "transformation_logic",
+        "statement": "A transformation/filter change in returns_daily is dropping or altering rows for returns_fact.",
+        "discriminating_question": "Does source/target reconciliation or a recent transformation change explain the delta?",
+        "rank": 1,
+        "status": "weakened",
+        "supporting_evidence_ids": [],
+        "contradicting_evidence_ids": [],
+        "origin": "initial_generation"
+      },
+      {
+        "hypothesis_id": "H2-source_data",
+        "category": "source_data",
+        "statement": "Upstream source data feeding returns_fact arrived late, incomplete, or reduced.",
+        "discriminating_question": "Did upstream dependencies deliver complete, on-time data?",
+        "rank": 2,
+        "status": "weakened",
+        "supporting_evidence_ids": [],
+        "contradicting_evidence_ids": [],
+        "origin": "initial_generation"
+      },
+      {
+        "hypothesis_id": "H3-orchestration",
+        "category": "orchestration",
+        "statement": "The returns_daily run failed, was skipped, or a task did not complete.",
+        "discriminating_question": "Did the pipeline run complete without task failures?",
+        "rank": 3,
+        "status": "weakened",
+        "supporting_evidence_ids": [],
+        "contradicting_evidence_ids": [],
+        "origin": "initial_generation"
+      },
+      {
+        "hypothesis_id": "H4-data_quality",
+        "category": "data_quality",
+        "statement": "A data-quality defect (nulls/uniqueness/validity) affected returns_fact.",
+        "discriminating_question": "Do declared quality tests pass for the dataset?",
+        "rank": 4,
+        "status": "weakened",
+        "supporting_evidence_ids": [],
+        "contradicting_evidence_ids": [],
+        "origin": "initial_generation"
+      }
+    ],
+    "evidence_ids": [
+      "ev_verification_INC-2002",
+      "ev_T1-H1-transformation_logic_compare_source_and_target",
+      "ev_T1-H1-transformation_logic_get_recent_transformation_changes",
+      "ev_T1-H2-source_data_get_upstream_dependencies",
+      "ev_T1-H2-source_data_get_processing_watermark",
+      "ev_T1-H3-orchestration_get_pipeline_run_status",
+      "ev_T1-H3-orchestration_get_task_failures",
+      "ev_T2-H1-transformation_logic_get_table_metrics",
+      "ev_T2-H4-data_quality_get_quality_results"
+    ],
+    "contradictions": [
+      {
+        "evidence_id": "ev_T1-H3-orchestration_get_pipeline_run_status",
+        "contradicts": [
+          "H3-orchestration"
+        ]
+      },
+      {
+        "evidence_id": "ev_T1-H3-orchestration_get_task_failures",
+        "contradicts": [
+          "H3-orchestration"
+        ]
+      }
+    ],
+    "unavailable_sources": [],
+    "stop_reason": "insufficient independent current evidence to diagnose; operational budget also exhausted",
+    "recommended_next_checks": [
+      "[transformation_logic] Does source/target reconciliation or a recent transformation change explain the delta?",
+      "[source_data] Did upstream dependencies deliver complete, on-time data?",
+      "[orchestration] Did the pipeline run complete without task failures?",
+      "[data_quality] Do declared quality tests pass for the dataset?"
+    ],
+    "review": {
+      "reviewed": true,
+      "decision": "pending",
+      "complete": false,
+      "reviewer_role": null,
+      "reviewed_at": "2026-09-06T21:49:48.618834+00:00",
+      "confirmed_root_cause": null
+    }
+  }
+}

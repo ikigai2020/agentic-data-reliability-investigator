@@ -1,0 +1,13 @@
+{
+  "incident_id": "INC-2002",
+  "dataset": "returns_fact",
+  "pipeline": "returns_daily",
+  "symptom_type": "volume_drop",
+  "observed_value": 8000,
+  "expected_value": 20000,
+  "observed_change_pct": -60.0,
+  "window_start": "2026-08-15T00:00:00Z",
+  "window_end": "2026-08-16T00:00:00Z",
+  "detected_at": "2026-08-16T03:00:00Z",
+  "severity": "medium"
+}

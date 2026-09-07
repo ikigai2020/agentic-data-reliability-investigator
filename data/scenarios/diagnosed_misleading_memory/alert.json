@@ -1,0 +1,12 @@
+{
+  "incident_id": "INC-1005",
+  "dataset": "payments_fact",
+  "pipeline": "payments_hourly",
+  "symptom_type": "null_spike",
+  "observed_value": 0.34,
+  "expected_value": 0.01,
+  "window_start": "2026-08-26T00:00:00Z",
+  "window_end": "2026-08-26T01:00:00Z",
+  "detected_at": "2026-08-26T01:20:00Z",
+  "severity": "high"
+}

@@ -1,0 +1,38 @@
+{
+  "table_metrics": {
+    "payments_fact": {
+      "row_count": 118400,
+      "expected_row_count": 120000,
+      "freshness_seconds": 1500.0,
+      "last_loaded_at": "2026-08-26T01:05:00Z",
+      "null_rate": {"settlement_id": 0.34, "amount": 0.0, "merchant_id": 0.001},
+      "duplicate_count": 0,
+      "distribution": {}
+    }
+  },
+  "quality_results": {
+    "payments_fact": {
+      "results": [
+        {"test_name": "not_null_settlement_id", "column": "settlement_id", "status": "fail", "observed_value": 40256, "threshold": 0},
+        {"test_name": "not_null_amount", "column": "amount", "status": "pass", "observed_value": 0, "threshold": 0},
+        {"test_name": "accepted_range_amount", "column": "amount", "status": "pass", "observed_value": 0, "threshold": 0}
+      ]
+    }
+  },
+  "schema_changes": {
+    "payments_fact": {"from_version": "v9", "to_version": "v9", "changes": [], "breaking": false}
+  },
+  "reconciliation": {
+    "payments_fact_source::payments_fact": {
+      "source_count": 118400,
+      "target_count": 118400,
+      "difference": 0,
+      "difference_pct": 0.0,
+      "rows_dropped_by_filter": 0,
+      "notes": "row counts reconcile; the defect is in column values, not row volume"
+    }
+  },
+  "transformation_changes": {
+    "payments_hourly": {"changes": []}
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "doc_id": "INC-HIST-0007",
+  "chunk_id": "INC-HIST-0007#0",
+  "type": "incident",
+  "title": "orders_daily volume drop traced to upstream source shortfall",
+  "text": "Confirmed incident: orders_daily volume_drop on orders_fact. Root cause was a source_data shortfall — the upstream orders_ingest feed delivered a partial extract. Reconciliation showed the source itself was short. Resolved after upstream re-run.",
+  "pipeline": "orders_daily",
+  "dataset": "orders_fact",
+  "category": "source_data",
+  "symptom_type": "volume_drop",
+  "environment": "prod",
+  "version": "v7",
+  "resolution_status": "resolved",
+  "confirmation_status": "confirmed",
+  "created_at": "2026-05-01T00:00:00Z",
+  "reviewed_at": "2026-06-01T00:00:00Z",
+  "expires_at": null
+}

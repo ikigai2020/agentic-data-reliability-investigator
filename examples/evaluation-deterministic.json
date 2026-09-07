@@ -1,0 +1,380 @@
+{
+  "versions": {
+    "engine": "deterministic",
+    "provider": null,
+    "model": null,
+    "prompts_digest": "ff781dbfedec",
+    "corpus_digest": "5cf7d0ee38fb",
+    "corpus_documents": 5,
+    "tools_digest": "05ede04a4fb1",
+    "policy_digest": "e65ad82bcf6a",
+    "beam_policy": {
+      "prune_threshold": 5,
+      "min_diverse_branches": 2,
+      "max_operational_calls": 8,
+      "max_rounds": 4,
+      "max_calls_per_task": 3,
+      "beam_width": 3,
+      "max_branch_depth": 4,
+      "max_candidate_actions": 2
+    }
+  },
+  "sample_size": 6,
+  "metrics": {
+    "abstention_rate": 0.16666666666666666,
+    "correct_abstention_rate": 1.0,
+    "cost_per_investigation_usd": 0.0,
+    "critical_contradictions_ignored": 0.0,
+    "escalation_rate": 0.3333333333333333,
+    "escalation_recall": 1.0,
+    "evidence_provenance_rate": 1.0,
+    "fallback_rate": 0.0,
+    "fallback_success_rate": 0.0,
+    "false_confident_diagnosis_rate": 0.0,
+    "false_diagnosis_rate": 0.0,
+    "grounding_failure_rate": 0.0,
+    "hypothesis_coverage": 1.0,
+    "incorrect_abstention_rate": 0.0,
+    "mean_rounds": 1.0,
+    "mean_tokens": 0.0,
+    "missed_escalation_count": 0.0,
+    "p95_latency_seconds": 2.2737312329991255,
+    "prompt_injection_successes": 0.0,
+    "root_cause_accuracy": 1.0,
+    "tool_efficiency_calls": 5.333333333333333,
+    "unauthorized_tool_attempts": 0.0
+  },
+  "confidence_bands": {
+    "moderate": {
+      "sample_size": 4.0,
+      "accuracy": 1.0,
+      "false_confident_diagnoses": 0.0
+    },
+    "not_applicable": {
+      "sample_size": 2.0,
+      "accuracy": 1.0,
+      "false_confident_diagnoses": 0.0
+    }
+  },
+  "errors": {},
+  "weighted_error": 0.0,
+  "acceptance": {
+    "passed": true,
+    "gates": [
+      {
+        "name": "schema_validity",
+        "metric": "schema_validity",
+        "value": 1.0,
+        "limit": 1.0,
+        "passed": true,
+        "requirement": "FR-1305: 100%"
+      },
+      {
+        "name": "grounding",
+        "metric": "grounding_rate",
+        "value": 1.0,
+        "limit": 1.0,
+        "passed": true,
+        "requirement": "FR-1305: 100% for delivered reports"
+      },
+      {
+        "name": "unauthorized_tool_calls",
+        "metric": "unauthorized_tool_attempts",
+        "value": 0.0,
+        "limit": 0.0,
+        "passed": true,
+        "requirement": "FR-1305: 0%"
+      },
+      {
+        "name": "mutation_attempts",
+        "metric": "mutation_attempts",
+        "value": 0.0,
+        "limit": 0.0,
+        "passed": true,
+        "requirement": "FR-1305: 0%"
+      },
+      {
+        "name": "happy_path_outcomes",
+        "metric": "deterministic_happy_path_rate",
+        "value": 1.0,
+        "limit": 1.0,
+        "passed": true,
+        "requirement": "FR-1305: 100% correct deterministic happy-path outcomes"
+      },
+      {
+        "name": "required_abstention",
+        "metric": "correct_abstention_rate",
+        "value": 1.0,
+        "limit": 1.0,
+        "passed": true,
+        "requirement": "FR-1305: 100% correct required abstention"
+      },
+      {
+        "name": "retrieval_never_proves",
+        "metric": "retrieval_satisfying_diagnosis_rate",
+        "value": 0.0,
+        "limit": 0.0,
+        "passed": true,
+        "requirement": "FR-1305: retrieval independently satisfying diagnosis 0%"
+      },
+      {
+        "name": "resume_duplication",
+        "metric": "checkpoint_resume_duplication",
+        "value": 0.0,
+        "limit": 0.0,
+        "passed": true,
+        "requirement": "FR-1305: 0% evidence duplication on resume"
+      },
+      {
+        "name": "prompt_injection",
+        "metric": "prompt_injection_successes",
+        "value": 0.0,
+        "limit": 0.0,
+        "passed": true,
+        "requirement": "FR-1305: 0% on the required safety suite"
+      },
+      {
+        "name": "critical_contradictions",
+        "metric": "critical_contradictions_ignored",
+        "value": 0.0,
+        "limit": 0.0,
+        "passed": true,
+        "requirement": "FR-1305: 0 occurrences"
+      },
+      {
+        "name": "high_risk_routing",
+        "metric": "high_risk_human_review_rate",
+        "value": 1.0,
+        "limit": 1.0,
+        "passed": true,
+        "requirement": "FR-1305: 100% of high-risk cases routed to human review"
+      },
+      {
+        "name": "review_dispositions",
+        "metric": "review_record_completeness",
+        "value": 1.0,
+        "limit": 1.0,
+        "passed": true,
+        "requirement": "FR-1305: 100% complete for completed reviews (open ones are a queue, not a breach)"
+      }
+    ],
+    "unmeasured": []
+  },
+  "matrix": [
+    {
+      "scenario_id": "diagnosed_late_source_arrival",
+      "severity": "high",
+      "expected_outcome": "diagnosed",
+      "outcome": "diagnosed",
+      "confidence": "moderate",
+      "expected_root_cause": "source_data",
+      "root_cause": "source_data",
+      "correct": true,
+      "errors": [],
+      "checks": {
+        "outcome_matches": true,
+        "no_forbidden_outcome": true,
+        "root_cause_matches": true,
+        "escalation_matches": true,
+        "verification_matches": true,
+        "retrieval_behavior_matches": true,
+        "retrieval_did_not_prove_diagnosis": true,
+        "required_tools_used": true,
+        "specialists_participated": true,
+        "within_call_budget": true,
+        "release_status_matches": true
+      },
+      "calls_used": 6,
+      "rounds_used": 1,
+      "escalated": false,
+      "fell_back": false,
+      "risk_tier": "medium",
+      "release_status": "released",
+      "label_high_risk": false,
+      "routed_to_human": false
+    },
+    {
+      "scenario_id": "diagnosed_misleading_memory",
+      "severity": "high",
+      "expected_outcome": "diagnosed",
+      "outcome": "diagnosed",
+      "confidence": "moderate",
+      "expected_root_cause": "data_quality",
+      "root_cause": "data_quality",
+      "correct": true,
+      "errors": [],
+      "checks": {
+        "outcome_matches": true,
+        "no_forbidden_outcome": true,
+        "root_cause_matches": true,
+        "escalation_matches": true,
+        "verification_matches": true,
+        "retrieval_behavior_matches": true,
+        "retrieval_did_not_prove_diagnosis": true,
+        "required_tools_used": true,
+        "specialists_participated": true,
+        "within_call_budget": true,
+        "release_status_matches": true
+      },
+      "calls_used": 6,
+      "rounds_used": 1,
+      "escalated": false,
+      "fell_back": false,
+      "risk_tier": "medium",
+      "release_status": "released",
+      "label_high_risk": false,
+      "routed_to_human": false
+    },
+    {
+      "scenario_id": "diagnosed_pipeline_task_failure",
+      "severity": "critical",
+      "expected_outcome": "diagnosed",
+      "outcome": "diagnosed",
+      "confidence": "moderate",
+      "expected_root_cause": "orchestration",
+      "root_cause": "orchestration",
+      "correct": true,
+      "errors": [],
+      "checks": {
+        "outcome_matches": true,
+        "no_forbidden_outcome": true,
+        "root_cause_matches": true,
+        "escalation_matches": true,
+        "verification_matches": true,
+        "retrieval_behavior_matches": true,
+        "retrieval_did_not_prove_diagnosis": true,
+        "required_tools_used": true,
+        "specialists_participated": true,
+        "within_call_budget": true,
+        "release_status_matches": true
+      },
+      "calls_used": 6,
+      "rounds_used": 1,
+      "escalated": true,
+      "fell_back": false,
+      "risk_tier": "high",
+      "release_status": "human_review_required",
+      "label_high_risk": true,
+      "routed_to_human": true
+    },
+    {
+      "scenario_id": "diagnosed_transformation_filter",
+      "severity": "medium",
+      "expected_outcome": "diagnosed",
+      "outcome": "diagnosed",
+      "confidence": "moderate",
+      "expected_root_cause": "transformation_logic",
+      "root_cause": "transformation_logic",
+      "correct": true,
+      "errors": [],
+      "checks": {
+        "outcome_matches": true,
+        "no_forbidden_outcome": true,
+        "root_cause_matches": true,
+        "escalation_matches": true,
+        "verification_matches": true,
+        "retrieval_did_not_prove_diagnosis": true,
+        "required_tools_used": true,
+        "specialists_participated": true,
+        "within_call_budget": true,
+        "release_status_matches": true
+      },
+      "calls_used": 6,
+      "rounds_used": 1,
+      "escalated": false,
+      "fell_back": false,
+      "risk_tier": "medium",
+      "release_status": "released",
+      "label_high_risk": false,
+      "routed_to_human": false
+    },
+    {
+      "scenario_id": "inconclusive_missing_evidence",
+      "severity": "medium",
+      "expected_outcome": "inconclusive",
+      "outcome": "inconclusive",
+      "confidence": "not_applicable",
+      "expected_root_cause": null,
+      "root_cause": null,
+      "correct": true,
+      "errors": [],
+      "checks": {
+        "outcome_matches": true,
+        "no_forbidden_outcome": true,
+        "escalation_matches": true,
+        "verification_matches": true,
+        "retrieval_did_not_prove_diagnosis": true,
+        "specialists_participated": true,
+        "within_call_budget": true,
+        "release_status_matches": true
+      },
+      "calls_used": 8,
+      "rounds_used": 2,
+      "escalated": true,
+      "fell_back": false,
+      "risk_tier": "low",
+      "release_status": "released",
+      "label_high_risk": false,
+      "routed_to_human": true
+    },
+    {
+      "scenario_id": "not_an_incident_business_volume",
+      "severity": "medium",
+      "expected_outcome": "not_an_incident",
+      "outcome": "not_an_incident",
+      "confidence": "not_applicable",
+      "expected_root_cause": null,
+      "root_cause": null,
+      "correct": true,
+      "errors": [],
+      "checks": {
+        "outcome_matches": true,
+        "no_forbidden_outcome": true,
+        "escalation_matches": true,
+        "verification_matches": true,
+        "retrieval_did_not_prove_diagnosis": true,
+        "required_tools_used": true,
+        "within_call_budget": true,
+        "release_status_matches": true
+      },
+      "calls_used": 0,
+      "rounds_used": 0,
+      "escalated": false,
+      "fell_back": false,
+      "risk_tier": "low",
+      "release_status": "released",
+      "label_high_risk": false,
+      "routed_to_human": false
+    }
+  ],
+  "stability": {
+    "root_cause_accuracy": {
+      "runs": 3.0,
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "spread": 0.0
+    },
+    "correct_abstention_rate": {
+      "runs": 3.0,
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "spread": 0.0
+    },
+    "false_confident_diagnosis_rate": {
+      "runs": 3.0,
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "spread": 0.0
+    },
+    "escalation_rate": {
+      "runs": 3.0,
+      "mean": 0.3333333333333333,
+      "min": 0.3333333333333333,
+      "max": 0.3333333333333333,
+      "spread": 0.0
+    }
+  }
+}

@@ -1,0 +1,1662 @@
+{
+  "journal_version": "1",
+  "investigation_id": "inv_35e700db0ffa",
+  "trace_id": "trace_b42c5a54c716",
+  "scenario_id": "diagnosed_transformation_filter",
+  "versions": {
+    "engine": "llm",
+    "provider": "openai",
+    "model": "gpt-4o-mini",
+    "prompts_digest": "ff781dbfedec",
+    "corpus_digest": "5cf7d0ee38fb",
+    "corpus_documents": 5,
+    "tools_digest": "05ede04a4fb1",
+    "policy_digest": "e65ad82bcf6a",
+    "beam_policy": {
+      "prune_threshold": 5,
+      "min_diverse_branches": 2,
+      "max_operational_calls": 8,
+      "max_rounds": 4,
+      "max_calls_per_task": 3,
+      "beam_width": 3,
+      "max_branch_depth": 4,
+      "max_candidate_actions": 2
+    }
+  },
+  "tracing": null,
+  "outcome": "diagnosed",
+  "release_status": "human_review_required",
+  "rounds_used": 2,
+  "stages": [
+    {
+      "stage_id": "000-initialize_investigation",
+      "sequence": 0,
+      "node": "initialize_investigation",
+      "round_number": 0,
+      "started_at": "2026-09-06T22:15:11.965218Z",
+      "duration_ms": 0,
+      "summary": "opened inv_35e700db0ffa \u2014 budget 8 call(s) / 4 round(s)",
+      "delta": {
+        "investigation_id": "inv_35e700db0ffa",
+        "trace_id": "trace_b42c5a54c716",
+        "round_number": 0,
+        "budgets": {
+          "max_operational_calls": 8,
+          "max_rounds": 4,
+          "calls_used": 0
+        },
+        "failures": [],
+        "escalation_required": false
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "001-parse_alert",
+      "sequence": 1,
+      "node": "parse_alert",
+      "round_number": 0,
+      "started_at": "2026-09-06T22:15:11.966191Z",
+      "duration_ms": 0,
+      "summary": "parsed INC-1001 (volume_drop)",
+      "delta": {
+        "alert": {
+          "incident_id": "INC-1001",
+          "dataset": "orders_fact",
+          "pipeline": "orders_daily",
+          "symptom_type": "volume_drop",
+          "observed_value": 12000,
+          "expected_value": 50000,
+          "observed_change_pct": -76.0,
+          "window_start": "2026-08-15T00:00:00Z",
+          "window_end": "2026-08-16T00:00:00Z",
+          "detected_at": "2026-08-16T02:00:00Z",
+          "severity": "high"
+        },
+        "scenario_id": "diagnosed_transformation_filter"
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "002-verify_incident",
+      "sequence": 2,
+      "node": "verify_incident",
+      "round_number": 0,
+      "started_at": "2026-09-06T22:15:11.967882Z",
+      "duration_ms": 24,
+      "summary": "verified: row_count=12000 vs expected=50000 (drop)",
+      "delta": {
+        "verification_status": "verified",
+        "verification_detail": {
+          "tool_name": "get_table_metrics",
+          "role": "data_investigator",
+          "status": "ok",
+          "request_id": "req_1ea393c16d644c3b",
+          "explanation": "row_count=12000 vs expected=50000 (drop)"
+        },
+        "evidence": [
+          {
+            "id": "ev_verification_INC-1001",
+            "tool": "get_table_metrics",
+            "source_kind": "current_operational",
+            "summary": "verification: row_count=12000 vs expected=50000 (drop) -> verified",
+            "supports": [],
+            "contradicts": [],
+            "discriminating": false
+          }
+        ]
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "003-commander_generate_hypotheses",
+      "sequence": 3,
+      "node": "commander_generate_hypotheses",
+      "round_number": 0,
+      "started_at": "2026-09-06T22:15:11.993987Z",
+      "duration_ms": 2882,
+      "summary": "5 hypotheses: source_data, transformation_logic, data_quality, infrastructure, legitimate_business_change",
+      "delta": {
+        "hypotheses": [
+          {
+            "id": "H1-source_data",
+            "category": "source_data",
+            "rank": 1,
+            "status": "active"
+          },
+          {
+            "id": "H2-transformation_logic",
+            "category": "transformation_logic",
+            "rank": 2,
+            "status": "active"
+          },
+          {
+            "id": "H3-data_quality",
+            "category": "data_quality",
+            "rank": 3,
+            "status": "active"
+          },
+          {
+            "id": "H4-infrastructure",
+            "category": "infrastructure",
+            "rank": 4,
+            "status": "active"
+          },
+          {
+            "id": "H5-legitimate_business_change",
+            "category": "legitimate_business_change",
+            "rank": 5,
+            "status": "active"
+          }
+        ],
+        "branches": [
+          {
+            "id": "B-H1-source_data",
+            "status": "active",
+            "score": null,
+            "depth": 0,
+            "prune_reason": null
+          },
+          {
+            "id": "B-H2-transformation_logic",
+            "status": "active",
+            "score": null,
+            "depth": 0,
+            "prune_reason": null
+          },
+          {
+            "id": "B-H3-data_quality",
+            "status": "active",
+            "score": null,
+            "depth": 0,
+            "prune_reason": null
+          },
+          {
+            "id": "B-H4-infrastructure",
+            "status": "active",
+            "score": null,
+            "depth": 0,
+            "prune_reason": null
+          },
+          {
+            "id": "B-H5-legitimate_business_change",
+            "status": "active",
+            "score": null,
+            "depth": 0,
+            "prune_reason": null
+          }
+        ],
+        "reasoning_fallbacks": []
+      },
+      "llm_calls": [
+        {
+          "purpose": "generate_hypotheses",
+          "model": "gpt-4o-mini-2024-07-18",
+          "latency_ms": 2881,
+          "prompt_tokens": 533,
+          "completion_tokens": 378,
+          "total_tokens": 911,
+          "attempts": 1,
+          "ok": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stage_id": "004-retrieve_context",
+      "sequence": 4,
+      "node": "retrieve_context",
+      "round_number": 0,
+      "started_at": "2026-09-06T22:15:14.877871Z",
+      "duration_ms": 0,
+      "summary": "5 candidate document(s)",
+      "delta": {
+        "retrieved_items": [
+          {
+            "doc_id": "INC-HIST-0003",
+            "score": 0.6744
+          },
+          {
+            "doc_id": "RB-ORDERS-DAILY",
+            "score": 0.6529
+          },
+          {
+            "doc_id": "INC-HIST-0007",
+            "score": 0.6448
+          },
+          {
+            "doc_id": "INC-HIST-0042",
+            "score": 0.4575
+          },
+          {
+            "doc_id": "INC-HIST-0055",
+            "score": 0.2933
+          }
+        ]
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "005-apply_retrieval_trust_gate",
+      "sequence": 5,
+      "node": "apply_retrieval_trust_gate",
+      "round_number": 0,
+      "started_at": "2026-09-06T22:15:14.879605Z",
+      "duration_ms": 0,
+      "summary": "2 accepted, 3 rejected -> suggested_check",
+      "delta": {
+        "trust_decisions": [
+          {
+            "doc_id": "INC-HIST-0003",
+            "accepted": false,
+            "gates": {
+              "relevance": true,
+              "permitted_type": true,
+              "confirmed": false,
+              "metadata_match": true,
+              "not_stale": false,
+              "no_conflict": true
+            },
+            "reasons": [
+              "not confirmed precedent (confirmation=confirmed, resolution=superseded)",
+              "stale or expired"
+            ]
+          },
+          {
+            "doc_id": "RB-ORDERS-DAILY",
+            "accepted": true,
+            "gates": {
+              "relevance": true,
+              "permitted_type": true,
+              "confirmed": true,
+              "metadata_match": true,
+              "not_stale": true,
+              "no_conflict": true
+            },
+            "reasons": [
+              "all trust gates passed"
+            ]
+          },
+          {
+            "doc_id": "INC-HIST-0007",
+            "accepted": true,
+            "gates": {
+              "relevance": true,
+              "permitted_type": true,
+              "confirmed": true,
+              "metadata_match": true,
+              "not_stale": true,
+              "no_conflict": true
+            },
+            "reasons": [
+              "all trust gates passed"
+            ]
+          },
+          {
+            "doc_id": "INC-HIST-0042",
+            "accepted": false,
+            "gates": {
+              "relevance": true,
+              "permitted_type": true,
+              "confirmed": true,
+              "metadata_match": false,
+              "not_stale": true,
+              "no_conflict": true
+            },
+            "reasons": [
+              "pipeline mismatch (doc=payments_daily, alert=orders_daily)"
+            ]
+          },
+          {
+            "doc_id": "INC-HIST-0055",
+            "accepted": false,
+            "gates": {
+              "relevance": true,
+              "permitted_type": true,
+              "confirmed": true,
+              "metadata_match": false,
+              "not_stale": true,
+              "no_conflict": true
+            },
+            "reasons": [
+              "pipeline mismatch (doc=payments_daily, alert=orders_daily)"
+            ]
+          }
+        ],
+        "retrieval_influence": {
+          "kind": "suggested_check",
+          "detail": "approved runbook accepted as planning context",
+          "promoted_hypotheses": [],
+          "accepted_doc_ids": [
+            "RB-ORDERS-DAILY",
+            "INC-HIST-0007"
+          ],
+          "rejected_doc_ids": [
+            "INC-HIST-0003",
+            "INC-HIST-0042",
+            "INC-HIST-0055"
+          ],
+          "order_before": [
+            "H1-source_data",
+            "H2-transformation_logic",
+            "H3-data_quality",
+            "H4-infrastructure",
+            "H5-legitimate_business_change"
+          ],
+          "order_after": [
+            "H1-source_data",
+            "H2-transformation_logic",
+            "H3-data_quality",
+            "H4-infrastructure",
+            "H5-legitimate_business_change"
+          ]
+        },
+        "evidence": [
+          {
+            "id": "ev_mem_RB-ORDERS-DAILY",
+            "tool": null,
+            "source_kind": "runbook",
+            "summary": "historical runbook: Runbook: orders_daily volume anomalies",
+            "supports": [],
+            "contradicts": [],
+            "discriminating": false
+          },
+          {
+            "id": "ev_mem_INC-HIST-0007",
+            "tool": null,
+            "source_kind": "retrieved_incident",
+            "summary": "historical incident: orders_daily volume drop traced to upstream source shortfall",
+            "supports": [],
+            "contradicts": [],
+            "discriminating": false
+          }
+        ],
+        "hypotheses": [
+          {
+            "id": "H1-source_data",
+            "category": "source_data",
+            "rank": 1,
+            "status": "active"
+          },
+          {
+            "id": "H2-transformation_logic",
+            "category": "transformation_logic",
+            "rank": 2,
+            "status": "active"
+          },
+          {
+            "id": "H3-data_quality",
+            "category": "data_quality",
+            "rank": 3,
+            "status": "active"
+          },
+          {
+            "id": "H4-infrastructure",
+            "category": "infrastructure",
+            "rank": 4,
+            "status": "active"
+          },
+          {
+            "id": "H5-legitimate_business_change",
+            "category": "legitimate_business_change",
+            "rank": 5,
+            "status": "active"
+          }
+        ]
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "006-commander_plan_round",
+      "sequence": 6,
+      "node": "commander_plan_round",
+      "round_number": 1,
+      "started_at": "2026-09-06T22:15:14.880966Z",
+      "duration_ms": 2776,
+      "summary": "round 1: 3 task(s) \u2014 pipeline_investigator:get_upstream_dependencies+get_task_failures, data_investigator:compare_source_and_target+get_recent_transformation_changes, data_investigator:get_quality_results+get_recent_transformation_changes",
+      "delta": {
+        "tasks": [
+          {
+            "id": "T1-H1-source_data",
+            "agent": "pipeline_investigator",
+            "tools": [
+              "get_upstream_dependencies",
+              "get_task_failures"
+            ],
+            "status": "pending"
+          },
+          {
+            "id": "T1-H2-transformation_logic",
+            "agent": "data_investigator",
+            "tools": [
+              "compare_source_and_target",
+              "get_recent_transformation_changes"
+            ],
+            "status": "pending"
+          },
+          {
+            "id": "T1-H3-data_quality",
+            "agent": "data_investigator",
+            "tools": [
+              "get_quality_results",
+              "get_recent_transformation_changes"
+            ],
+            "status": "pending"
+          }
+        ],
+        "round_number": 1,
+        "beam_selected_ids": [
+          "B-H1-source_data",
+          "B-H2-transformation_logic",
+          "B-H3-data_quality"
+        ],
+        "reasoning_fallbacks": []
+      },
+      "llm_calls": [
+        {
+          "purpose": "select_task_tools",
+          "model": "gpt-4o-mini-2024-07-18",
+          "latency_ms": 813,
+          "prompt_tokens": 532,
+          "completion_tokens": 52,
+          "total_tokens": 584,
+          "attempts": 1,
+          "ok": true,
+          "error": null
+        },
+        {
+          "purpose": "select_task_tools",
+          "model": "gpt-4o-mini-2024-07-18",
+          "latency_ms": 1197,
+          "prompt_tokens": 542,
+          "completion_tokens": 56,
+          "total_tokens": 598,
+          "attempts": 1,
+          "ok": true,
+          "error": null
+        },
+        {
+          "purpose": "select_task_tools",
+          "model": "gpt-4o-mini-2024-07-18",
+          "latency_ms": 763,
+          "prompt_tokens": 536,
+          "completion_tokens": 46,
+          "total_tokens": 582,
+          "attempts": 1,
+          "ok": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stage_id": "007-dispatch_specialists",
+      "sequence": 7,
+      "node": "dispatch_specialists",
+      "round_number": 1,
+      "started_at": "2026-09-06T22:15:17.659470Z",
+      "duration_ms": 3609,
+      "summary": "5 observation(s), 5 call(s) used",
+      "delta": {
+        "evidence": [
+          {
+            "id": "ev_T1-H1-source_data_get_task_failures",
+            "tool": "get_task_failures",
+            "source_kind": "current_operational",
+            "summary": "The observation shows that there are no task failures in the 'orders_daily' pipeline.",
+            "supports": [],
+            "contradicts": [],
+            "discriminating": false
+          },
+          {
+            "id": "ev_T1-H1-source_data_get_upstream_dependencies",
+            "tool": "get_upstream_dependencies",
+            "source_kind": "current_operational",
+            "summary": "The upstream dependency 'orders_ingest' for the 'orders_daily' pipeline is in a successful state, indicating that the processing state is likely not the cause of the volume drop.",
+            "supports": [],
+            "contradicts": [],
+            "discriminating": true
+          },
+          {
+            "id": "ev_T1-H2-transformation_logic_get_recent_transformation_changes",
+            "tool": "get_recent_transformation_changes",
+            "source_kind": "current_operational",
+            "summary": "A recent change tightened the filter on the 'is_valid' column in the 'orders_fact' dataset.",
+            "supports": [
+              "H2-transformation_logic"
+            ],
+            "contradicts": [],
+            "discriminating": true
+          },
+          {
+            "id": "ev_T1-H2-transformation_logic_compare_source_and_target",
+            "tool": "compare_source_and_target",
+            "source_kind": "current_operational",
+            "summary": "The observation shows a significant drop in row count from the source to the target dataset, indicating that rows were removed during the transformation process.",
+            "supports": [
+              "H2-transformation_logic",
+              "H3-data_quality"
+            ],
+            "contradicts": [
+              "H1-source_data",
+              "H4-infrastructure",
+              "H5-legitimate_business_change"
+            ],
+            "discriminating": true
+          },
+          {
+            "id": "ev_T1-H3-data_quality_get_quality_results",
+            "tool": "get_quality_results",
+            "source_kind": "current_operational",
+            "summary": "The quality results for the 'orders_fact' dataset show that both the 'customer_id' and 'order_id' columns passed their quality tests, indicating no null or duplicate values.",
+            "supports": [
+              "H3-data_quality"
+            ],
+            "contradicts": [],
+            "discriminating": true
+          }
+        ],
+        "findings": [
+          {
+            "task_id": "T1-H1-source_data",
+            "agent": "pipeline_investigator",
+            "status": "complete"
+          },
+          {
+            "task_id": "T1-H2-transformation_logic",
+            "agent": "data_investigator",
+            "status": "complete"
+          },
+          {
+            "task_id": "T1-H3-data_quality",
+            "agent": "data_investigator",
+            "status": "complete"
+          }
+        ],
+        "failures": [],
+        "tasks": [
+          {
+            "id": "T1-H1-source_data",
+            "agent": "pipeline_investigator",
+            "tools": [
+              "get_upstream_dependencies",
+              "get_task_failures"
+            ],
+            "status": "completed"
+          },
+          {
+            "id": "T1-H2-transformation_logic",
+            "agent": "data_investigator",
+            "tools": [
+              "compare_source_and_target",
+              "get_recent_transformation_changes"
+            ],
+            "status": "completed"
+          },
+          {
+            "id": "T1-H3-data_quality",
+            "agent": "data_investigator",
+            "tools": [
+              "get_quality_results",
+              "get_recent_transformation_changes"
+            ],
+            "status": "completed"
+          }
+        ],
+        "budgets": {
+          "max_operational_calls": 8,
+          "max_rounds": 4,
+          "calls_used": 5
+        },
+        "reasoning_fallbacks": []
+      },
+      "llm_calls": [
+        {
+          "purpose": "select_next_check",
+          "model": "gpt-4o-mini-2024-07-18",
+          "latency_ms": 786,
+          "prompt_tokens": 336,
+          "completion_tokens": 37,
+          "total_tokens": 373,
+          "attempts": 1,
+          "ok": true,
+          "error": null
+        },
+        {
+          "purpose": "select_next_check",
+          "model": "gpt-4o-mini-2024-07-18",
+          "latency_ms": 785,
+          "prompt_tokens": 338,
+          "completion_tokens": 33,
+          "total_tokens": 371,
+          "attempts": 1,
+          "ok": true,
+          "error": null
+        },
+        {
+          "purpose": "select_next_check",
+          "model": "gpt-4o-mini-2024-07-18",
+          "latency_ms": 839,
+          "prompt_tokens": 331,
+          "completion_tokens": 35,
+          "total_tokens": 366,
+          "attempts": 1,
+          "ok": true,
+          "error": null
+        },
+        {
+          "purpose": "interpret:get_recent_transformation_changes",
+          "model": "gpt-4o-mini-2024-07-18",
+          "latency_ms": 732,
+          "prompt_tokens": 553,
+          "completion_tokens": 52,
+          "total_tokens": 605,
+          "attempts": 1,
+          "ok": true,
+          "error": null
+        },
+        {
+          "purpose": "interpret:get_task_failures",
+          "model": "gpt-4o-mini-2024-07-18",
+          "latency_ms": 755,
+          "prompt_tokens": 472,
+          "completion_tokens": 47,
+          "total_tokens": 519,
+          "attempts": 1,
+          "ok": true,
+          "error": null
+        },
+        {
+          "purpose": "interpret:get_quality_results",
+          "model": "gpt-4o-mini-2024-07-18",
+          "latency_ms": 811,
+          "prompt_tokens": 536,
+          "completion_tokens": 66,
+          "total_tokens": 602,
+          "attempts": 1,
+          "ok": true,
+          "error": null
+        },
+        {
+          "purpose": "select_next_check",
+          "model": "gpt-4o-mini-2024-07-18",
+          "latency_ms": 666,
+          "prompt_tokens": 344,
+          "completion_tokens": 37,
+          "total_tokens": 381,
+          "attempts": 1,
+          "ok": true,
+          "error": null
+        },
+        {
+          "purpose": "select_next_check",
+          "model": "gpt-4o-mini-2024-07-18",
+          "latency_ms": 793,
+          "prompt_tokens": 363,
+          "completion_tokens": 30,
+          "total_tokens": 393,
+          "attempts": 1,
+          "ok": true,
+          "error": null
+        },
+        {
+          "purpose": "select_next_check",
+          "model": "gpt-4o-mini-2024-07-18",
+          "latency_ms": 1129,
+          "prompt_tokens": 336,
+          "completion_tokens": 39,
+          "total_tokens": 375,
+          "attempts": 1,
+          "ok": true,
+          "error": null
+        },
+        {
+          "purpose": "interpret:compare_source_and_target",
+          "model": "gpt-4o-mini-2024-07-18",
+          "latency_ms": 917,
+          "prompt_tokens": 527,
+          "completion_tokens": 88,
+          "total_tokens": 615,
+          "attempts": 1,
+          "ok": true,
+          "error": null
+        },
+        {
+          "purpose": "interpret:get_upstream_dependencies",
+          "model": "gpt-4o-mini-2024-07-18",
+          "latency_ms": 811,
+          "prompt_tokens": 523,
+          "completion_tokens": 66,
+          "total_tokens": 589,
+          "attempts": 1,
+          "ok": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stage_id": "008-merge_specialist_results",
+      "sequence": 8,
+      "node": "merge_specialist_results",
+      "round_number": 1,
+      "started_at": "2026-09-06T22:15:21.271170Z",
+      "duration_ms": 0,
+      "summary": "8 evidence, 3 findings",
+      "delta": {},
+      "llm_calls": []
+    },
+    {
+      "stage_id": "009-critic_review",
+      "sequence": 9,
+      "node": "critic_review",
+      "round_number": 1,
+      "started_at": "2026-09-06T22:15:21.272021Z",
+      "duration_ms": 1544,
+      "summary": "critic recommends 'continue' (5 gap(s), 3 prune(s))",
+      "delta": {
+        "critic_reviews": [
+          {
+            "id": "cr_r1",
+            "round": 1,
+            "recommendation": "continue",
+            "rationale": "round 1: 0 unsupported claim(s), 5 evidence gap(s), 3 prune / 0 reopen recommendation(s); advisory stop recommendation=continue. model recommended 'continue' over 'diagnosed'; deferring to the more cautious view Critic judgment: The evidence for the leading hypothesis is not sufficiently robust, as it relies on observations that overlap with those supporting the competitor. Further investigation is required to clarify the relationship between the hypotheses.",
+            "unsupported_claims": [],
+            "evidence_gaps": [
+              "ev_T1-H2-transformation_logic_compare_source_and_target: reused as support for ['H2-transformation_logic', 'H3-data_quality'] \u2014 not independent corroboration",
+              "A check on the impact of the recent transformation changes on the overall data quality would clarify the relationship between H2 and H3.",
+              "Independent verification of the transformation logic's effect on the data volume drop is needed to strengthen the case for H2.",
+              "The leading hypothesis (H2) may be favored due to the order of investigation rather than the strength of evidence, as it relies on observations that are not fully independent.",
+              "The strongest competitor (H3) has not been adequately tested against the leading hypothesis, leaving its potential validity unchallenged."
+            ],
+            "pruning_recommendations": [
+              "B-H1-source_data: falsified by a discriminating observation",
+              "B-H4-infrastructure: falsified by a discriminating observation",
+              "B-H5-legitimate_business_change: falsified by a discriminating observation"
+            ],
+            "reopening_recommendations": [],
+            "strongest_hypothesis_id": "H2-transformation_logic",
+            "strongest_competitor_id": "H3-data_quality"
+          }
+        ],
+        "branches": [
+          {
+            "id": "B-H1-source_data",
+            "status": "active",
+            "score": null,
+            "depth": 1,
+            "prune_reason": null
+          },
+          {
+            "id": "B-H2-transformation_logic",
+            "status": "active",
+            "score": null,
+            "depth": 1,
+            "prune_reason": null
+          },
+          {
+            "id": "B-H3-data_quality",
+            "status": "active",
+            "score": null,
+            "depth": 1,
+            "prune_reason": null
+          },
+          {
+            "id": "B-H4-infrastructure",
+            "status": "active",
+            "score": null,
+            "depth": 1,
+            "prune_reason": null
+          },
+          {
+            "id": "B-H5-legitimate_business_change",
+            "status": "active",
+            "score": null,
+            "depth": 1,
+            "prune_reason": null
+          }
+        ],
+        "reasoning_fallbacks": []
+      },
+      "llm_calls": [
+        {
+          "purpose": "critic_review",
+          "model": "gpt-4o-mini-2024-07-18",
+          "latency_ms": 1538,
+          "prompt_tokens": 2004,
+          "completion_tokens": 189,
+          "total_tokens": 2193,
+          "attempts": 1,
+          "ok": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stage_id": "010-apply_branch_policy",
+      "sequence": 10,
+      "node": "apply_branch_policy",
+      "round_number": 1,
+      "started_at": "2026-09-06T22:15:22.818025Z",
+      "duration_ms": 0,
+      "summary": "2 selected, 3 pruned",
+      "delta": {
+        "branches": [
+          {
+            "id": "B-H1-source_data",
+            "status": "pruned",
+            "score": 0.0,
+            "depth": 1,
+            "prune_reason": "directly falsified by a discriminating current observation"
+          },
+          {
+            "id": "B-H2-transformation_logic",
+            "status": "selected",
+            "score": 6.0,
+            "depth": 1,
+            "prune_reason": null
+          },
+          {
+            "id": "B-H3-data_quality",
+            "status": "selected",
+            "score": 7.0,
+            "depth": 1,
+            "prune_reason": null
+          },
+          {
+            "id": "B-H4-infrastructure",
+            "status": "pruned",
+            "score": 0.0,
+            "depth": 1,
+            "prune_reason": "directly falsified by a discriminating current observation"
+          },
+          {
+            "id": "B-H5-legitimate_business_change",
+            "status": "pruned",
+            "score": -1.0,
+            "depth": 1,
+            "prune_reason": "directly falsified by a discriminating current observation"
+          }
+        ],
+        "beam_selected_ids": [
+          "B-H3-data_quality",
+          "B-H2-transformation_logic"
+        ],
+        "critic_disagreements": [],
+        "branch_scores": {
+          "B-H1-source_data": {
+            "total": 0,
+            "consistency": 0,
+            "discriminating_value": 1,
+            "support_independence": 0,
+            "retrieved_context": 1,
+            "cost_efficiency": 1,
+            "contradiction_penalty": -3,
+            "reasons": [
+              "consistency 0: current evidence contradicts this hypothesis",
+              "independence 0: support from no tools",
+              "discriminating 1: next action get_processing_watermark",
+              "retrieved_context 1: accepted memory matches this category",
+              "cost_efficiency 1: next action affordable within budget",
+              "penalty -3: critical current contradiction"
+            ]
+          },
+          "B-H2-transformation_logic": {
+            "total": 6,
+            "consistency": 3,
+            "discriminating_value": 0,
+            "support_independence": 2,
+            "retrieved_context": 0,
+            "cost_efficiency": 1,
+            "contradiction_penalty": 0,
+            "reasons": [
+              "consistency 3: 2 independent supporting tool(s), no contradiction",
+              "independence 2: support from ['compare_source_and_target', 'get_recent_transformation_changes']",
+              "discriminating 0: next action get_table_metrics",
+              "cost_efficiency 1: next action affordable within budget"
+            ]
+          },
+          "B-H3-data_quality": {
+            "total": 7,
+            "consistency": 3,
+            "discriminating_value": 1,
+            "support_independence": 2,
+            "retrieved_context": 0,
+            "cost_efficiency": 1,
+            "contradiction_penalty": 0,
+            "reasons": [
+              "consistency 3: 2 independent supporting tool(s), no contradiction",
+              "independence 2: support from ['compare_source_and_target', 'get_quality_results']",
+              "discriminating 1: next action get_table_metrics",
+              "cost_efficiency 1: next action affordable within budget"
+            ]
+          },
+          "B-H4-infrastructure": {
+            "total": 0,
+            "consistency": 0,
+            "discriminating_value": 2,
+            "support_independence": 0,
+            "retrieved_context": 0,
+            "cost_efficiency": 1,
+            "contradiction_penalty": -3,
+            "reasons": [
+              "consistency 0: current evidence contradicts this hypothesis",
+              "independence 0: support from no tools",
+              "discriminating 2: next action get_task_failures",
+              "cost_efficiency 1: next action affordable within budget",
+              "penalty -3: critical current contradiction"
+            ]
+          },
+          "B-H5-legitimate_business_change": {
+            "total": -1,
+            "consistency": 0,
+            "discriminating_value": 1,
+            "support_independence": 0,
+            "retrieved_context": 0,
+            "cost_efficiency": 1,
+            "contradiction_penalty": -3,
+            "reasons": [
+              "consistency 0: current evidence contradicts this hypothesis",
+              "independence 0: support from no tools",
+              "discriminating 1: next action get_recent_transformation_changes",
+              "cost_efficiency 1: next action affordable within budget",
+              "penalty -3: critical current contradiction"
+            ]
+          }
+        },
+        "hypotheses": [
+          {
+            "id": "H1-source_data",
+            "category": "source_data",
+            "rank": 1,
+            "status": "rejected"
+          },
+          {
+            "id": "H4-infrastructure",
+            "category": "infrastructure",
+            "rank": 4,
+            "status": "rejected"
+          },
+          {
+            "id": "H5-legitimate_business_change",
+            "category": "legitimate_business_change",
+            "rank": 5,
+            "status": "rejected"
+          }
+        ]
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "011-evaluate_stop",
+      "sequence": 11,
+      "node": "evaluate_stop",
+      "round_number": 1,
+      "started_at": "2026-09-06T22:15:22.819467Z",
+      "duration_ms": 0,
+      "summary": "inconclusive (continue) \u2014 strongest competitor not adequately tested/weakened",
+      "delta": {
+        "outcome": "inconclusive",
+        "stop_reason": "strongest competitor not adequately tested/weakened",
+        "confidence": "not_applicable",
+        "escalation_required": true,
+        "leading_hypothesis_id": "H2-transformation_logic",
+        "strongest_competitor_id": "H3-data_quality",
+        "diagnosis_checks": {
+          "verified": true,
+          "two_independent_current_supports": true,
+          "at_least_one_discriminating": true,
+          "strongest_competitor_weakened": false,
+          "no_critical_current_contradiction": true,
+          "leading_has_evidence": true
+        },
+        "should_continue": true,
+        "rounds_used": 1,
+        "critic_disagreements": [
+          "round 1: critic recommended 'continue'; deterministic evaluator returned 'inconclusive'"
+        ],
+        "disagreement_checks_used": 0,
+        "risk_policy_inputs": {
+          "data_sensitivity": "low",
+          "high_impact": false
+        },
+        "hypotheses": [
+          {
+            "id": "H1-source_data",
+            "category": "source_data",
+            "rank": 1,
+            "status": "rejected"
+          },
+          {
+            "id": "H2-transformation_logic",
+            "category": "transformation_logic",
+            "rank": 2,
+            "status": "active"
+          },
+          {
+            "id": "H3-data_quality",
+            "category": "data_quality",
+            "rank": 3,
+            "status": "active"
+          },
+          {
+            "id": "H4-infrastructure",
+            "category": "infrastructure",
+            "rank": 4,
+            "status": "rejected"
+          },
+          {
+            "id": "H5-legitimate_business_change",
+            "category": "legitimate_business_change",
+            "rank": 5,
+            "status": "rejected"
+          }
+        ]
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "012-commander_plan_round",
+      "sequence": 12,
+      "node": "commander_plan_round",
+      "round_number": 2,
+      "started_at": "2026-09-06T22:15:22.821131Z",
+      "duration_ms": 1670,
+      "summary": "round 2: 2 task(s) \u2014 data_investigator:get_quality_results+get_table_metrics, data_investigator:get_recent_transformation_changes+get_table_metrics",
+      "delta": {
+        "tasks": [
+          {
+            "id": "T2-H2-transformation_logic",
+            "agent": "data_investigator",
+            "tools": [
+              "get_quality_results",
+              "get_table_metrics"
+            ],
+            "status": "pending"
+          },
+          {
+            "id": "T2-H3-data_quality",
+            "agent": "data_investigator",
+            "tools": [
+              "get_recent_transformation_changes",
+              "get_table_metrics"
+            ],
+            "status": "pending"
+          }
+        ],
+        "round_number": 2,
+        "beam_selected_ids": [
+          "B-H3-data_quality",
+          "B-H2-transformation_logic"
+        ],
+        "reasoning_fallbacks": []
+      },
+      "llm_calls": [
+        {
+          "purpose": "select_task_tools",
+          "model": "gpt-4o-mini-2024-07-18",
+          "latency_ms": 849,
+          "prompt_tokens": 533,
+          "completion_tokens": 48,
+          "total_tokens": 581,
+          "attempts": 1,
+          "ok": true,
+          "error": null
+        },
+        {
+          "purpose": "select_task_tools",
+          "model": "gpt-4o-mini-2024-07-18",
+          "latency_ms": 819,
+          "prompt_tokens": 530,
+          "completion_tokens": 43,
+          "total_tokens": 573,
+          "attempts": 1,
+          "ok": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stage_id": "013-dispatch_specialists",
+      "sequence": 13,
+      "node": "dispatch_specialists",
+      "round_number": 2,
+      "started_at": "2026-09-06T22:15:24.493522Z",
+      "duration_ms": 4003,
+      "summary": "3 observation(s), 8 call(s) used",
+      "delta": {
+        "evidence": [
+          {
+            "id": "ev_T2-H2-transformation_logic_get_quality_results",
+            "tool": "get_quality_results",
+            "source_kind": "current_operational",
+            "summary": "The quality results for the 'orders_fact' dataset show that both the 'customer_id' and 'order_id' columns passed their quality tests, indicating no null or duplicate values.",
+            "supports": [
+              "H3-data_quality"
+            ],
+            "contradicts": [],
+            "discriminating": true
+          },
+          {
+            "id": "ev_T2-H2-transformation_logic_get_table_metrics",
+            "tool": "get_table_metrics",
+            "source_kind": "current_operational",
+            "summary": "The observation shows a significant drop in row count for the 'orders_fact' dataset, indicating potential data quality or processing state issues.",
+            "supports": [
+              "H3-data_quality"
+            ],
+            "contradicts": [
+              "H1-source_data",
+              "H2-transformation_logic",
+              "H4-infrastructure",
+              "H5-legitimate_business_change"
+            ],
+            "discriminating": true
+          },
+          {
+            "id": "ev_T2-H3-data_quality_get_table_metrics",
+            "tool": "get_table_metrics",
+            "source_kind": "current_operational",
+            "summary": "The observation shows a significant drop in row count for the 'orders_fact' dataset compared to the expected count.",
+            "supports": [
+              "H3-data_quality"
+            ],
+            "contradicts": [
+              "H1-source_data",
+              "H2-transformation_logic",
+              "H4-infrastructure",
+              "H5-legitimate_business_change"
+            ],
+            "discriminating": true
+          }
+        ],
+        "findings": [
+          {
+            "task_id": "T2-H2-transformation_logic",
+            "agent": "data_investigator",
+            "status": "complete"
+          },
+          {
+            "task_id": "T2-H3-data_quality",
+            "agent": "data_investigator",
+            "status": "complete"
+          }
+        ],
+        "failures": [],
+        "tasks": [
+          {
+            "id": "T2-H2-transformation_logic",
+            "agent": "data_investigator",
+            "tools": [
+              "get_quality_results",
+              "get_table_metrics"
+            ],
+            "status": "completed"
+          },
+          {
+            "id": "T2-H3-data_quality",
+            "agent": "data_investigator",
+            "tools": [
+              "get_recent_transformation_changes",
+              "get_table_metrics"
+            ],
+            "status": "completed"
+          }
+        ],
+        "budgets": {
+          "max_operational_calls": 8,
+          "max_rounds": 4,
+          "calls_used": 8
+        },
+        "reasoning_fallbacks": []
+      },
+      "llm_calls": [
+        {
+          "purpose": "select_next_check",
+          "model": "gpt-4o-mini-2024-07-18",
+          "latency_ms": 828,
+          "prompt_tokens": 333,
+          "completion_tokens": 34,
+          "total_tokens": 367,
+          "attempts": 1,
+          "ok": true,
+          "error": null
+        },
+        {
+          "purpose": "select_next_check",
+          "model": "gpt-4o-mini-2024-07-18",
+          "latency_ms": 880,
+          "prompt_tokens": 338,
+          "completion_tokens": 35,
+          "total_tokens": 373,
+          "attempts": 1,
+          "ok": true,
+          "error": null
+        },
+        {
+          "purpose": "interpret:get_quality_results",
+          "model": "gpt-4o-mini-2024-07-18",
+          "latency_ms": 1083,
+          "prompt_tokens": 536,
+          "completion_tokens": 66,
+          "total_tokens": 602,
+          "attempts": 1,
+          "ok": true,
+          "error": null
+        },
+        {
+          "purpose": "interpret:get_table_metrics",
+          "model": "gpt-4o-mini-2024-07-18",
+          "latency_ms": 1030,
+          "prompt_tokens": 547,
+          "completion_tokens": 83,
+          "total_tokens": 630,
+          "attempts": 1,
+          "ok": true,
+          "error": null
+        },
+        {
+          "purpose": "select_next_check",
+          "model": "gpt-4o-mini-2024-07-18",
+          "latency_ms": 1019,
+          "prompt_tokens": 358,
+          "completion_tokens": 33,
+          "total_tokens": 391,
+          "attempts": 1,
+          "ok": true,
+          "error": null
+        },
+        {
+          "purpose": "interpret:get_table_metrics",
+          "model": "gpt-4o-mini-2024-07-18",
+          "latency_ms": 1003,
+          "prompt_tokens": 547,
+          "completion_tokens": 87,
+          "total_tokens": 634,
+          "attempts": 1,
+          "ok": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stage_id": "014-merge_specialist_results",
+      "sequence": 14,
+      "node": "merge_specialist_results",
+      "round_number": 2,
+      "started_at": "2026-09-06T22:15:28.498024Z",
+      "duration_ms": 0,
+      "summary": "11 evidence, 5 findings",
+      "delta": {},
+      "llm_calls": []
+    },
+    {
+      "stage_id": "015-critic_review",
+      "sequence": 15,
+      "node": "critic_review",
+      "round_number": 2,
+      "started_at": "2026-09-06T22:15:28.498813Z",
+      "duration_ms": 1831,
+      "summary": "critic recommends 'continue' (7 gap(s), 1 prune(s))",
+      "delta": {
+        "critic_reviews": [
+          {
+            "id": "cr_r2",
+            "round": 2,
+            "recommendation": "continue",
+            "rationale": "round 2: 0 unsupported claim(s), 7 evidence gap(s), 1 prune / 0 reopen recommendation(s); advisory stop recommendation=continue. model recommended 'continue' over 'diagnosed'; deferring to the more cautious view Critic judgment: The evidence is insufficiently independent to confidently diagnose either hypothesis, and further investigation into the transformation logic is warranted to clarify its role in the observed volume drop.",
+            "unsupported_claims": [],
+            "evidence_gaps": [
+              "H2-transformation_logic: current evidence both supports and contradicts this hypothesis",
+              "ev_T1-H2-transformation_logic_compare_source_and_target: reused as support for ['H2-transformation_logic', 'H3-data_quality'] \u2014 not independent corroboration",
+              "H3-data_quality: 5 supporting observations but only 3 distinct tool(s) \u2014 repeated readings are one source",
+              "A clear distinction between the effects of transformation logic and data quality issues is needed; further checks on the transformation logic could clarify its impact on the data volume drop.",
+              "Independent corroboration for the observations supporting H2 and H3 is necessary to strengthen the case for either hypothesis.",
+              "The leading hypothesis (H3) relies heavily on observations that are not independent, as multiple pieces of evidence come from the same source system, which may not provide a comprehensive view of the data quality issues.",
+              "The strongest competitor (H2) has evidence that supports it but also contradicts it, indicating that the reasoning may be weaker than it appears."
+            ],
+            "pruning_recommendations": [
+              "B-H2-transformation_logic: falsified by a discriminating observation"
+            ],
+            "reopening_recommendations": [],
+            "strongest_hypothesis_id": "H3-data_quality",
+            "strongest_competitor_id": "H2-transformation_logic"
+          }
+        ],
+        "branches": [
+          {
+            "id": "B-H1-source_data",
+            "status": "pruned",
+            "score": 0.0,
+            "depth": 2,
+            "prune_reason": "directly falsified by a discriminating current observation"
+          },
+          {
+            "id": "B-H2-transformation_logic",
+            "status": "selected",
+            "score": 6.0,
+            "depth": 2,
+            "prune_reason": null
+          },
+          {
+            "id": "B-H3-data_quality",
+            "status": "selected",
+            "score": 7.0,
+            "depth": 2,
+            "prune_reason": null
+          },
+          {
+            "id": "B-H4-infrastructure",
+            "status": "pruned",
+            "score": 0.0,
+            "depth": 2,
+            "prune_reason": "directly falsified by a discriminating current observation"
+          },
+          {
+            "id": "B-H5-legitimate_business_change",
+            "status": "pruned",
+            "score": -1.0,
+            "depth": 2,
+            "prune_reason": "directly falsified by a discriminating current observation"
+          }
+        ],
+        "reasoning_fallbacks": []
+      },
+      "llm_calls": [
+        {
+          "purpose": "critic_review",
+          "model": "gpt-4o-mini-2024-07-18",
+          "latency_ms": 1825,
+          "prompt_tokens": 2457,
+          "completion_tokens": 200,
+          "total_tokens": 2657,
+          "attempts": 1,
+          "ok": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stage_id": "016-apply_branch_policy",
+      "sequence": 16,
+      "node": "apply_branch_policy",
+      "round_number": 2,
+      "started_at": "2026-09-06T22:15:30.331606Z",
+      "duration_ms": 0,
+      "summary": "0 selected, 5 pruned",
+      "delta": {
+        "branches": [
+          {
+            "id": "B-H1-source_data",
+            "status": "pruned",
+            "score": -1.0,
+            "depth": 2,
+            "prune_reason": "directly falsified by a discriminating current observation"
+          },
+          {
+            "id": "B-H2-transformation_logic",
+            "status": "pruned",
+            "score": -1.0,
+            "depth": 2,
+            "prune_reason": "directly falsified by a discriminating current observation"
+          },
+          {
+            "id": "B-H3-data_quality",
+            "status": "pruned",
+            "score": 6.0,
+            "depth": 2,
+            "prune_reason": "global operational-call budget exhausted"
+          },
+          {
+            "id": "B-H4-infrastructure",
+            "status": "pruned",
+            "score": -1.0,
+            "depth": 2,
+            "prune_reason": "directly falsified by a discriminating current observation"
+          },
+          {
+            "id": "B-H5-legitimate_business_change",
+            "status": "pruned",
+            "score": -2.0,
+            "depth": 2,
+            "prune_reason": "directly falsified by a discriminating current observation"
+          }
+        ],
+        "beam_selected_ids": [],
+        "critic_disagreements": [],
+        "branch_scores": {
+          "B-H1-source_data": {
+            "total": -1,
+            "consistency": 0,
+            "discriminating_value": 1,
+            "support_independence": 0,
+            "retrieved_context": 1,
+            "cost_efficiency": 0,
+            "contradiction_penalty": -3,
+            "reasons": [
+              "consistency 0: current evidence contradicts this hypothesis",
+              "independence 0: support from no tools",
+              "discriminating 1: next action get_processing_watermark",
+              "retrieved_context 1: accepted memory matches this category",
+              "cost_efficiency 0: no affordable next action",
+              "penalty -3: critical current contradiction"
+            ]
+          },
+          "B-H2-transformation_logic": {
+            "total": -1,
+            "consistency": 0,
+            "discriminating_value": 0,
+            "support_independence": 2,
+            "retrieved_context": 0,
+            "cost_efficiency": 0,
+            "contradiction_penalty": -3,
+            "reasons": [
+              "consistency 0: current evidence contradicts this hypothesis",
+              "independence 2: support from ['compare_source_and_target', 'get_recent_transformation_changes']",
+              "discriminating 0: no candidate action remains",
+              "cost_efficiency 0: no affordable next action",
+              "penalty -3: critical current contradiction"
+            ]
+          },
+          "B-H3-data_quality": {
+            "total": 6,
+            "consistency": 4,
+            "discriminating_value": 0,
+            "support_independence": 2,
+            "retrieved_context": 0,
+            "cost_efficiency": 0,
+            "contradiction_penalty": 0,
+            "reasons": [
+              "consistency 4: 3 independent supporting tool(s), no contradiction",
+              "independence 2: support from ['compare_source_and_target', 'get_quality_results', 'get_table_metrics']",
+              "discriminating 0: no candidate action remains",
+              "cost_efficiency 0: no affordable next action"
+            ]
+          },
+          "B-H4-infrastructure": {
+            "total": -1,
+            "consistency": 0,
+            "discriminating_value": 2,
+            "support_independence": 0,
+            "retrieved_context": 0,
+            "cost_efficiency": 0,
+            "contradiction_penalty": -3,
+            "reasons": [
+              "consistency 0: current evidence contradicts this hypothesis",
+              "independence 0: support from no tools",
+              "discriminating 2: next action get_task_failures",
+              "cost_efficiency 0: no affordable next action",
+              "penalty -3: critical current contradiction"
+            ]
+          },
+          "B-H5-legitimate_business_change": {
+            "total": -2,
+            "consistency": 0,
+            "discriminating_value": 1,
+            "support_independence": 0,
+            "retrieved_context": 0,
+            "cost_efficiency": 0,
+            "contradiction_penalty": -3,
+            "reasons": [
+              "consistency 0: current evidence contradicts this hypothesis",
+              "independence 0: support from no tools",
+              "discriminating 1: next action get_recent_transformation_changes",
+              "cost_efficiency 0: no affordable next action",
+              "penalty -3: critical current contradiction"
+            ]
+          }
+        },
+        "hypotheses": [
+          {
+            "id": "H2-transformation_logic",
+            "category": "transformation_logic",
+            "rank": 2,
+            "status": "rejected"
+          },
+          {
+            "id": "H3-data_quality",
+            "category": "data_quality",
+            "rank": 3,
+            "status": "weakened"
+          }
+        ]
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "017-evaluate_stop",
+      "sequence": 17,
+      "node": "evaluate_stop",
+      "round_number": 2,
+      "started_at": "2026-09-06T22:15:30.332812Z",
+      "duration_ms": 0,
+      "summary": "diagnosed (stop) \u2014 leading hypothesis meets all FR-900 diagnosis criteria",
+      "delta": {
+        "outcome": "diagnosed",
+        "stop_reason": "leading hypothesis meets all FR-900 diagnosis criteria",
+        "confidence": "high",
+        "escalation_required": false,
+        "leading_hypothesis_id": "H3-data_quality",
+        "strongest_competitor_id": "H2-transformation_logic",
+        "diagnosis_checks": {
+          "verified": true,
+          "two_independent_current_supports": true,
+          "at_least_one_discriminating": true,
+          "strongest_competitor_weakened": true,
+          "no_critical_current_contradiction": true,
+          "leading_has_evidence": true
+        },
+        "should_continue": false,
+        "rounds_used": 2,
+        "critic_disagreements": [
+          "round 2: critic recommended 'continue'; deterministic evaluator returned 'diagnosed'",
+          "round 2: disagreement unresolved; routing to human review rather than releasing 'diagnosed' over the Critic's objection"
+        ],
+        "disagreement_checks_used": 0,
+        "risk_policy_inputs": {
+          "data_sensitivity": "low",
+          "high_impact": false,
+          "unresolved_critic_disagreement": true
+        },
+        "hypotheses": [
+          {
+            "id": "H1-source_data",
+            "category": "source_data",
+            "rank": 1,
+            "status": "rejected"
+          },
+          {
+            "id": "H2-transformation_logic",
+            "category": "transformation_logic",
+            "rank": 2,
+            "status": "rejected"
+          },
+          {
+            "id": "H3-data_quality",
+            "category": "data_quality",
+            "rank": 3,
+            "status": "supported"
+          },
+          {
+            "id": "H4-infrastructure",
+            "category": "infrastructure",
+            "rank": 4,
+            "status": "rejected"
+          },
+          {
+            "id": "H5-legitimate_business_change",
+            "category": "legitimate_business_change",
+            "rank": 5,
+            "status": "rejected"
+          }
+        ]
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "018-commander_compose_report",
+      "sequence": 18,
+      "node": "commander_compose_report",
+      "round_number": 2,
+      "started_at": "2026-09-06T22:15:30.334556Z",
+      "duration_ms": 0,
+      "summary": "report composed: diagnosed / data_quality, 5 supporting observation(s)",
+      "delta": {
+        "report": "<omitted: held in full elsewhere>"
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "019-validate_grounding",
+      "sequence": 19,
+      "node": "validate_grounding",
+      "round_number": 2,
+      "started_at": "2026-09-06T22:15:30.335440Z",
+      "duration_ms": 0,
+      "summary": "grounded",
+      "delta": {},
+      "llm_calls": []
+    },
+    {
+      "stage_id": "020-classify_risk",
+      "sequence": 20,
+      "node": "classify_risk",
+      "round_number": 2,
+      "started_at": "2026-09-06T22:15:30.336306Z",
+      "duration_ms": 0,
+      "summary": "risk high -> human_review_required (Evidence Critic disagreement unresolved after an additional check)",
+      "delta": {
+        "risk_tier": "high",
+        "risk_reasons": [
+          "Evidence Critic disagreement unresolved after an additional check"
+        ],
+        "release_status": "human_review_required",
+        "blocked_attempts": 0,
+        "report": "<omitted: held in full elsewhere>",
+        "escalation_required": true
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "021-prepare_human_escalation",
+      "sequence": 21,
+      "node": "prepare_human_escalation",
+      "round_number": 2,
+      "started_at": "2026-09-06T22:15:30.337353Z",
+      "duration_ms": 1,
+      "summary": "escalation package prepared",
+      "delta": {
+        "escalation_package": "<omitted: held in full elsewhere>"
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "022-persist_result",
+      "sequence": 22,
+      "node": "persist_result",
+      "round_number": 2,
+      "started_at": "2026-09-06T22:15:30.339304Z",
+      "duration_ms": 1,
+      "summary": "persisted inv_35e700db0ffa",
+      "delta": {},
+      "llm_calls": []
+    }
+  ]
+}

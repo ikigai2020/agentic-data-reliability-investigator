@@ -1,0 +1,44 @@
+{
+  "pipeline_run_status": {
+    "billing_daily": {
+      "schedule": "0 3 * * *",
+      "scheduled_start": "2026-08-23T03:00:00Z",
+      "actual_start": "2026-08-23T03:00:04Z",
+      "actual_end": "2026-08-23T03:06:41Z",
+      "duration_seconds": 397,
+      "state": "failed",
+      "is_terminal": true
+    }
+  },
+  "task_failures": {
+    "billing_daily": {
+      "failures": [
+        {"task_name": "load_billing_fact", "state": "failed", "attempts": 3, "error_type": "SqlCompilationError", "message": "column invoice_uuid does not exist in staging_billing"},
+        {"task_name": "publish_billing_marts", "state": "blocked", "attempts": 1, "error_type": "UpstreamFailed", "message": "skipped because load_billing_fact failed"}
+      ]
+    }
+  },
+  "execution_logs": {
+    "billing_daily": {
+      "events": [
+        {"timestamp": "2026-08-23T03:00:04Z", "level": "INFO", "task": "extract_billing", "message": "extracted 61000 source rows"},
+        {"timestamp": "2026-08-23T03:04:10Z", "level": "INFO", "task": "transform_billing", "message": "transform completed in 214s"},
+        {"timestamp": "2026-08-23T03:06:40Z", "level": "WARNING", "task": "load_billing_fact", "message": "retry 3 of 3 exhausted"}
+      ]
+    }
+  },
+  "upstream_dependencies": {
+    "billing_daily": {
+      "dependencies": [
+        {"name": "invoices_ingest", "state": "success", "last_success": "2026-08-23T02:40:00Z", "expected_by": "2026-08-23T03:00:00Z", "is_late": false}
+      ]
+    }
+  },
+  "processing_watermark": {
+    "billing_daily": {
+      "watermark": "2026-08-22T00:00:00Z",
+      "latest_event_time": "2026-08-22T00:00:00Z",
+      "lag_seconds": 1800.0
+    }
+  }
+}

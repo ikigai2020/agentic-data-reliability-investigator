@@ -1,0 +1,203 @@
+{
+  "journal_version": "1",
+  "investigation_id": "inv_059a6957cf16",
+  "trace_id": "trace_b07ed1a54f7c",
+  "scenario_id": "not_an_incident_business_volume",
+  "versions": {
+    "engine": "deterministic",
+    "provider": null,
+    "model": null,
+    "prompts_digest": "ff781dbfedec",
+    "corpus_digest": "5cf7d0ee38fb",
+    "corpus_documents": 5,
+    "tools_digest": "05ede04a4fb1",
+    "policy_digest": "e65ad82bcf6a",
+    "beam_policy": {
+      "prune_threshold": 5,
+      "min_diverse_branches": 2,
+      "max_operational_calls": 8,
+      "max_rounds": 4,
+      "max_calls_per_task": 3,
+      "beam_width": 3,
+      "max_branch_depth": 4,
+      "max_candidate_actions": 2
+    }
+  },
+  "tracing": null,
+  "outcome": "not_an_incident",
+  "release_status": "released",
+  "rounds_used": 0,
+  "stages": [
+    {
+      "stage_id": "000-initialize_investigation",
+      "sequence": 0,
+      "node": "initialize_investigation",
+      "round_number": 0,
+      "started_at": "2026-09-06T21:49:31.960729Z",
+      "duration_ms": 0,
+      "summary": "opened inv_059a6957cf16 \u2014 budget 8 call(s) / 4 round(s)",
+      "delta": {
+        "investigation_id": "inv_059a6957cf16",
+        "trace_id": "trace_b07ed1a54f7c",
+        "round_number": 0,
+        "budgets": {
+          "max_operational_calls": 8,
+          "max_rounds": 4,
+          "calls_used": 0
+        },
+        "failures": [],
+        "escalation_required": false
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "001-parse_alert",
+      "sequence": 1,
+      "node": "parse_alert",
+      "round_number": 0,
+      "started_at": "2026-09-06T21:49:31.961644Z",
+      "duration_ms": 0,
+      "summary": "parsed INC-1004 (volume_spike)",
+      "delta": {
+        "alert": {
+          "incident_id": "INC-1004",
+          "dataset": "signups_fact",
+          "pipeline": "signups_daily",
+          "symptom_type": "volume_spike",
+          "observed_value": 41200,
+          "expected_value": 22000,
+          "observed_change_pct": 87.3,
+          "window_start": "2026-08-24T00:00:00Z",
+          "window_end": "2026-08-25T00:00:00Z",
+          "detected_at": "2026-08-25T04:10:00Z",
+          "severity": "medium"
+        },
+        "scenario_id": "not_an_incident_business_volume"
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "002-verify_incident",
+      "sequence": 2,
+      "node": "verify_incident",
+      "round_number": 0,
+      "started_at": "2026-09-06T21:49:31.963310Z",
+      "duration_ms": 24,
+      "summary": "not_verified: row_count=41200 vs expected=40800 (spike)",
+      "delta": {
+        "verification_status": "not_verified",
+        "verification_detail": {
+          "tool_name": "get_table_metrics",
+          "role": "data_investigator",
+          "status": "ok",
+          "request_id": "req_9978205fd25f4f49",
+          "explanation": "row_count=41200 vs expected=40800 (spike)"
+        },
+        "evidence": [
+          {
+            "id": "ev_verification_INC-1004",
+            "tool": "get_table_metrics",
+            "source_kind": "current_operational",
+            "summary": "verification: row_count=41200 vs expected=40800 (spike) -> not_verified",
+            "supports": [],
+            "contradicts": [],
+            "discriminating": false
+          }
+        ]
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "003-evaluate_stop",
+      "sequence": 3,
+      "node": "evaluate_stop",
+      "round_number": 0,
+      "started_at": "2026-09-06T21:49:31.989018Z",
+      "duration_ms": 0,
+      "summary": "not_an_incident (stop) \u2014 authoritative current check shows the alert condition is absent",
+      "delta": {
+        "outcome": "not_an_incident",
+        "stop_reason": "authoritative current check shows the alert condition is absent",
+        "confidence": "not_applicable",
+        "escalation_required": false,
+        "leading_hypothesis_id": null,
+        "strongest_competitor_id": null,
+        "diagnosis_checks": {},
+        "should_continue": false,
+        "rounds_used": 0,
+        "critic_disagreements": [],
+        "disagreement_checks_used": 0,
+        "risk_policy_inputs": {
+          "data_sensitivity": "low",
+          "high_impact": false
+        }
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "004-commander_compose_report",
+      "sequence": 4,
+      "node": "commander_compose_report",
+      "round_number": 0,
+      "started_at": "2026-09-06T21:49:31.990722Z",
+      "duration_ms": 0,
+      "summary": "report composed: not_an_incident / no cause named, 0 supporting observation(s)",
+      "delta": {
+        "report": "<omitted: held in full elsewhere>"
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "005-validate_grounding",
+      "sequence": 5,
+      "node": "validate_grounding",
+      "round_number": 0,
+      "started_at": "2026-09-06T21:49:31.991643Z",
+      "duration_ms": 0,
+      "summary": "grounded",
+      "delta": {},
+      "llm_calls": []
+    },
+    {
+      "stage_id": "006-classify_risk",
+      "sequence": 6,
+      "node": "classify_risk",
+      "round_number": 0,
+      "started_at": "2026-09-06T21:49:31.992492Z",
+      "duration_ms": 0,
+      "summary": "risk low -> released (read-only, low-impact investigation)",
+      "delta": {
+        "risk_tier": "low",
+        "risk_reasons": [
+          "read-only, low-impact investigation"
+        ],
+        "release_status": "released",
+        "blocked_attempts": 0,
+        "report": "<omitted: held in full elsewhere>"
+      },
+      "llm_calls": []
+    },
+    {
+      "stage_id": "007-prepare_human_escalation",
+      "sequence": 7,
+      "node": "prepare_human_escalation",
+      "round_number": 0,
+      "started_at": "2026-09-06T21:49:31.993482Z",
+      "duration_ms": 0,
+      "summary": "no escalation",
+      "delta": {},
+      "llm_calls": []
+    },
+    {
+      "stage_id": "008-persist_result",
+      "sequence": 8,
+      "node": "persist_result",
+      "round_number": 0,
+      "started_at": "2026-09-06T21:49:31.994210Z",
+      "duration_ms": 0,
+      "summary": "persisted inv_059a6957cf16",
+      "delta": {},
+      "llm_calls": []
+    }
+  ]
+}

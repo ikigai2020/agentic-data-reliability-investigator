@@ -1,0 +1,282 @@
+{
+  "release_status": "released",
+  "report": {
+    "investigation_id": "inv_044087183b58",
+    "alert": {
+      "incident_id": "INC-1001",
+      "dataset": "orders_fact",
+      "pipeline": "orders_daily",
+      "symptom_type": "volume_drop",
+      "observed_value": 12000,
+      "expected_value": 50000,
+      "observed_change_pct": -76.0,
+      "window_start": "2026-08-15T00:00:00Z",
+      "window_end": "2026-08-16T00:00:00Z",
+      "detected_at": "2026-08-16T02:00:00Z",
+      "severity": "high"
+    },
+    "verification": {
+      "status": "verified",
+      "detail": {
+        "tool_name": "get_table_metrics",
+        "role": "data_investigator",
+        "status": "ok",
+        "request_id": "req_3e813f0ac290476e",
+        "explanation": "row_count=12000 vs expected=50000 (drop)"
+      }
+    },
+    "outcome": "diagnosed",
+    "stop_reason": "leading hypothesis meets all FR-900 diagnosis criteria",
+    "confidence": "moderate",
+    "leading_hypothesis": {
+      "hypothesis_id": "H1-transformation_logic",
+      "category": "transformation_logic",
+      "statement": "A transformation/filter change in orders_daily is dropping or altering rows for orders_fact.",
+      "discriminating_question": "Does source/target reconciliation or a recent transformation change explain the delta?",
+      "rank": 2,
+      "status": "supported",
+      "supporting_evidence_ids": [],
+      "contradicting_evidence_ids": [],
+      "origin": "initial_generation"
+    },
+    "supporting_evidence_ids": [
+      "ev_T1-H1-transformation_logic_compare_source_and_target",
+      "ev_T1-H1-transformation_logic_get_recent_transformation_changes"
+    ],
+    "contradicting_evidence_ids": [],
+    "strongest_alternative": {
+      "hypothesis_id": "H2-source_data",
+      "category": "source_data",
+      "statement": "Upstream source data feeding orders_fact arrived late, incomplete, or reduced.",
+      "discriminating_question": "Did upstream dependencies deliver complete, on-time data?",
+      "rank": 1,
+      "status": "rejected",
+      "supporting_evidence_ids": [],
+      "contradicting_evidence_ids": [],
+      "origin": "retrieval_influenced"
+    },
+    "historical_context": {
+      "retrieval_influence": {
+        "kind": "reordered",
+        "detail": "promoted ['H2-source_data'] from confirmed historical incident(s)",
+        "promoted_hypotheses": [
+          "H2-source_data"
+        ],
+        "accepted_doc_ids": [
+          "INC-HIST-0007",
+          "RB-ORDERS-DAILY"
+        ],
+        "rejected_doc_ids": [
+          "INC-HIST-0003",
+          "INC-HIST-0042",
+          "INC-HIST-0055"
+        ],
+        "order_before": [
+          "H1-transformation_logic",
+          "H2-source_data",
+          "H3-orchestration",
+          "H4-data_quality"
+        ],
+        "order_after": [
+          "H2-source_data",
+          "H1-transformation_logic",
+          "H3-orchestration",
+          "H4-data_quality"
+        ]
+      },
+      "effect": "reordered",
+      "historical_evidence_ids": [
+        "ev_mem_INC-HIST-0007",
+        "ev_mem_RB-ORDERS-DAILY"
+      ],
+      "note": "historical context may reorder investigation but never establishes the diagnosis"
+    },
+    "tools": {
+      "called": [
+        "compare_source_and_target",
+        "get_pipeline_run_status",
+        "get_processing_watermark",
+        "get_recent_transformation_changes",
+        "get_table_metrics",
+        "get_task_failures",
+        "get_upstream_dependencies"
+      ],
+      "unavailable": []
+    },
+    "uncertainty": null,
+    "recommended_next_checks": [],
+    "guardrail_and_budget_events": {
+      "operational_calls_used": 6,
+      "max_operational_calls": 8,
+      "failures": [],
+      "diagnosis_checks": {
+        "verified": true,
+        "two_independent_current_supports": true,
+        "at_least_one_discriminating": true,
+        "strongest_competitor_weakened": true,
+        "no_critical_current_contradiction": true,
+        "leading_has_evidence": true
+      },
+      "rounds_used": 1,
+      "critic_disagreements": [
+        "round 1: critic recommended pruning B-H4-data_quality; deterministic policy kept it"
+      ],
+      "reasoning_fallbacks": [],
+      "blocked_tool_attempts": 0
+    },
+    "branches": [
+      {
+        "branch_id": "B-H1-transformation_logic",
+        "hypothesis_id": "H1-transformation_logic",
+        "depth": 1,
+        "score": 6.0,
+        "status": "selected",
+        "prune_reason": null,
+        "action_history": [
+          "compare_source_and_target",
+          "get_recent_transformation_changes"
+        ]
+      },
+      {
+        "branch_id": "B-H2-source_data",
+        "hypothesis_id": "H2-source_data",
+        "depth": 1,
+        "score": -1.0,
+        "status": "pruned",
+        "prune_reason": "directly falsified by a discriminating current observation",
+        "action_history": [
+          "compare_source_and_target",
+          "get_processing_watermark",
+          "get_upstream_dependencies"
+        ]
+      },
+      {
+        "branch_id": "B-H3-orchestration",
+        "hypothesis_id": "H3-orchestration",
+        "depth": 1,
+        "score": 2.0,
+        "status": "pruned",
+        "prune_reason": "score 2 below threshold 5",
+        "action_history": [
+          "get_pipeline_run_status",
+          "get_task_failures"
+        ]
+      },
+      {
+        "branch_id": "B-H4-data_quality",
+        "hypothesis_id": "H4-data_quality",
+        "depth": 0,
+        "score": 4.0,
+        "status": "selected",
+        "prune_reason": null,
+        "action_history": [
+          "diversity hold (would have been pruned: score 4 below threshold 5)"
+        ]
+      }
+    ],
+    "evidence_index": [
+      {
+        "evidence_id": "ev_verification_INC-1001",
+        "tool_name": "get_table_metrics",
+        "source_kind": "current_operational",
+        "summary": "verification: row_count=12000 vs expected=50000 (drop) -> verified",
+        "supports": [],
+        "contradicts": [],
+        "freshness_status": "current"
+      },
+      {
+        "evidence_id": "ev_mem_INC-HIST-0007",
+        "tool_name": null,
+        "source_kind": "retrieved_incident",
+        "summary": "historical incident: orders_daily volume drop traced to upstream source shortfall",
+        "supports": [],
+        "contradicts": [],
+        "freshness_status": "historical"
+      },
+      {
+        "evidence_id": "ev_mem_RB-ORDERS-DAILY",
+        "tool_name": null,
+        "source_kind": "runbook",
+        "summary": "historical runbook: Runbook: orders_daily volume anomalies",
+        "supports": [],
+        "contradicts": [],
+        "freshness_status": "historical"
+      },
+      {
+        "evidence_id": "ev_T1-H2-source_data_get_upstream_dependencies",
+        "tool_name": "get_upstream_dependencies",
+        "source_kind": "current_operational",
+        "summary": "all upstream dependencies succeeded on time",
+        "supports": [],
+        "contradicts": [
+          "H2-source_data"
+        ],
+        "freshness_status": "current"
+      },
+      {
+        "evidence_id": "ev_T1-H2-source_data_get_processing_watermark",
+        "tool_name": "get_processing_watermark",
+        "source_kind": "current_operational",
+        "summary": "processing lag 3600s (within tolerance)",
+        "supports": [],
+        "contradicts": [],
+        "freshness_status": "current"
+      },
+      {
+        "evidence_id": "ev_T1-H1-transformation_logic_compare_source_and_target",
+        "tool_name": "compare_source_and_target",
+        "source_kind": "current_operational",
+        "summary": "38000 rows dropped at transform stage (source intact)",
+        "supports": [
+          "H1-transformation_logic"
+        ],
+        "contradicts": [
+          "H2-source_data"
+        ],
+        "freshness_status": "current"
+      },
+      {
+        "evidence_id": "ev_T1-H1-transformation_logic_get_recent_transformation_changes",
+        "tool_name": "get_recent_transformation_changes",
+        "source_kind": "current_operational",
+        "summary": "1 recent transformation change(s)",
+        "supports": [
+          "H1-transformation_logic"
+        ],
+        "contradicts": [],
+        "freshness_status": "current"
+      },
+      {
+        "evidence_id": "ev_T1-H3-orchestration_get_pipeline_run_status",
+        "tool_name": "get_pipeline_run_status",
+        "source_kind": "current_operational",
+        "summary": "pipeline run succeeded and is terminal",
+        "supports": [],
+        "contradicts": [
+          "H3-orchestration"
+        ],
+        "freshness_status": "current"
+      },
+      {
+        "evidence_id": "ev_T1-H3-orchestration_get_task_failures",
+        "tool_name": "get_task_failures",
+        "source_kind": "current_operational",
+        "summary": "no task failures",
+        "supports": [],
+        "contradicts": [
+          "H3-orchestration"
+        ],
+        "freshness_status": "current"
+      }
+    ],
+    "release_status": "released",
+    "risk": {
+      "tier": "medium",
+      "reasons": [
+        "elevated incident severity (high)",
+        "medium risk: independent validation required (FR-900 satisfied)"
+      ]
+    }
+  },
+  "escalation_package": null
+}

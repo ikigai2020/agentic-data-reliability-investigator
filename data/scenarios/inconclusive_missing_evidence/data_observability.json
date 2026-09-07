@@ -1,0 +1,17 @@
+{
+  "table_metrics": {
+    "returns_fact": {
+      "row_count": 8000,
+      "expected_row_count": 20000,
+      "freshness_seconds": 7200.0,
+      "last_loaded_at": "2026-08-16T02:10:00Z",
+      "null_rate": {},
+      "duplicate_count": 0,
+      "distribution": {}
+    }
+  },
+  "quality_results": {},
+  "schema_changes": {},
+  "reconciliation": {},
+  "transformation_changes": {}
+}

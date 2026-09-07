@@ -1,0 +1,18 @@
+{
+  "doc_id": "INC-HIST-0055",
+  "chunk_id": "INC-HIST-0055#0",
+  "type": "incident",
+  "title": "payments_daily null spike on payments_fact traced to a schema contract break",
+  "text": "Confirmed incident: payments_daily null_spike on payments_fact. Root cause was schema_contract — the upstream settlement feed renamed settlement_id and the loader wrote nulls for the whole window. Same dataset and the same symptom as the hourly pipeline, but a different pipeline with a different loader.",
+  "pipeline": "payments_daily",
+  "dataset": "payments_fact",
+  "category": "schema_contract",
+  "symptom_type": "null_spike",
+  "environment": "prod",
+  "version": "v9",
+  "resolution_status": "resolved",
+  "confirmation_status": "confirmed",
+  "created_at": "2026-07-20T00:00:00Z",
+  "reviewed_at": "2026-08-01T00:00:00Z",
+  "expires_at": null
+}

@@ -1,0 +1,80 @@
+{
+  "release_status": "released",
+  "report": {
+    "investigation_id": "inv_059a6957cf16",
+    "alert": {
+      "incident_id": "INC-1004",
+      "dataset": "signups_fact",
+      "pipeline": "signups_daily",
+      "symptom_type": "volume_spike",
+      "observed_value": 41200,
+      "expected_value": 22000,
+      "observed_change_pct": 87.3,
+      "window_start": "2026-08-24T00:00:00Z",
+      "window_end": "2026-08-25T00:00:00Z",
+      "detected_at": "2026-08-25T04:10:00Z",
+      "severity": "medium"
+    },
+    "verification": {
+      "status": "not_verified",
+      "detail": {
+        "tool_name": "get_table_metrics",
+        "role": "data_investigator",
+        "status": "ok",
+        "request_id": "req_9978205fd25f4f49",
+        "explanation": "row_count=41200 vs expected=40800 (spike)"
+      }
+    },
+    "outcome": "not_an_incident",
+    "stop_reason": "authoritative current check shows the alert condition is absent",
+    "confidence": "not_applicable",
+    "leading_hypothesis": null,
+    "supporting_evidence_ids": [],
+    "contradicting_evidence_ids": [],
+    "strongest_alternative": null,
+    "historical_context": {
+      "retrieval_influence": null,
+      "effect": "not_run",
+      "historical_evidence_ids": [],
+      "note": "historical context may reorder investigation but never establishes the diagnosis"
+    },
+    "tools": {
+      "called": [
+        "get_table_metrics"
+      ],
+      "unavailable": []
+    },
+    "uncertainty": "authoritative current check shows the alert condition is absent",
+    "recommended_next_checks": [],
+    "guardrail_and_budget_events": {
+      "operational_calls_used": 0,
+      "max_operational_calls": 8,
+      "failures": [],
+      "diagnosis_checks": {},
+      "rounds_used": 0,
+      "critic_disagreements": [],
+      "reasoning_fallbacks": [],
+      "blocked_tool_attempts": 0
+    },
+    "branches": [],
+    "evidence_index": [
+      {
+        "evidence_id": "ev_verification_INC-1004",
+        "tool_name": "get_table_metrics",
+        "source_kind": "current_operational",
+        "summary": "verification: row_count=41200 vs expected=40800 (spike) -> not_verified",
+        "supports": [],
+        "contradicts": [],
+        "freshness_status": "current"
+      }
+    ],
+    "release_status": "released",
+    "risk": {
+      "tier": "low",
+      "reasons": [
+        "read-only, low-impact investigation"
+      ]
+    }
+  },
+  "escalation_package": null
+}

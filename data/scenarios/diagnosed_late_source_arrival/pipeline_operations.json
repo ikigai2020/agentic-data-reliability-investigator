@@ -1,0 +1,40 @@
+{
+  "pipeline_run_status": {
+    "shipments_daily": {
+      "schedule": "0 2 * * *",
+      "scheduled_start": "2026-08-21T02:00:00Z",
+      "actual_start": "2026-08-21T02:00:08Z",
+      "actual_end": "2026-08-21T02:10:00Z",
+      "duration_seconds": 592,
+      "state": "success",
+      "is_terminal": true
+    }
+  },
+  "task_failures": {
+    "shipments_daily": {"failures": []}
+  },
+  "execution_logs": {
+    "shipments_daily": {
+      "events": [
+        {"timestamp": "2026-08-21T02:00:08Z", "level": "INFO", "task": "extract_shipments", "message": "extracted 9000 source rows"},
+        {"timestamp": "2026-08-21T02:04:00Z", "level": "WARNING", "task": "extract_shipments", "message": "source partition 2026-08-20 smaller than 30-day median"},
+        {"timestamp": "2026-08-21T02:09:50Z", "level": "INFO", "task": "load_shipments_fact", "message": "loaded 9000 rows"}
+      ]
+    }
+  },
+  "upstream_dependencies": {
+    "shipments_daily": {
+      "dependencies": [
+        {"name": "carrier_feed_ingest", "state": "success", "last_success": "2026-08-21T01:50:00Z", "expected_by": "2026-08-20T22:00:00Z", "is_late": true},
+        {"name": "warehouse_events_ingest", "state": "success", "last_success": "2026-08-20T21:40:00Z", "expected_by": "2026-08-20T22:00:00Z", "is_late": false}
+      ]
+    }
+  },
+  "processing_watermark": {
+    "shipments_daily": {
+      "watermark": "2026-08-20T08:00:00Z",
+      "latest_event_time": "2026-08-21T00:00:00Z",
+      "lag_seconds": 57600.0
+    }
+  }
+}

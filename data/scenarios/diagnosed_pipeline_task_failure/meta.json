@@ -1,0 +1,19 @@
+{
+  "scenario_id": "diagnosed_pipeline_task_failure",
+  "title": "Pipeline task / dependency failure (FR-1301 #3)",
+  "fr1301_index": 3,
+  "severity": "critical",
+  "expected_verification": "verified",
+  "expected_outcome": "diagnosed",
+  "expected_root_cause_category": "orchestration",
+  "required_evidence_tools": ["get_pipeline_run_status", "get_task_failures"],
+  "forbidden_outcomes": ["not_an_incident", "inconclusive"],
+  "specialist_participation": ["pipeline_investigator"],
+  "retrieval_behavior": "rejected",
+  "max_operational_calls": 8,
+  "escalation_expected": true,
+  "risk": {"data_sensitivity": "high", "high_impact": true},
+  "expected_risk_tier": "high",
+  "expected_release_status": "human_review_required",
+  "notes": "The pipeline specialist leads. A failure with a SQL error refutes infrastructure rather than merely coexisting with it, so the competitor is genuinely weakened. High impact holds the diagnosis for a human despite sufficient evidence (FR-1105)."
+}

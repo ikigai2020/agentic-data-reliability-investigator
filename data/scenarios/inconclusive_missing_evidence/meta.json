@@ -1,0 +1,25 @@
+{
+  "scenario_id": "inconclusive_missing_evidence",
+  "title": "Insufficient evidence requiring abstention (FR-1301 #6)",
+  "fr1301_index": 6,
+  "expected_verification": "verified",
+  "expected_outcome": "inconclusive",
+  "expected_root_cause_category": null,
+  "required_evidence_tools": [],
+  "forbidden_outcomes": [
+    "diagnosed",
+    "not_an_incident"
+  ],
+  "specialist_participation": [
+    "data_investigator",
+    "pipeline_investigator"
+  ],
+  "retrieval_behavior": "not_required",
+  "max_operational_calls": 8,
+  "escalation_expected": true,
+  "risk": {
+    "data_sensitivity": "low",
+    "high_impact": false
+  },
+  "expected_release_status": "released"
+}

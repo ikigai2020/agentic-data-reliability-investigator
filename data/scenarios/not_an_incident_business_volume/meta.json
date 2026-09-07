@@ -1,0 +1,19 @@
+{
+  "scenario_id": "not_an_incident_business_volume",
+  "title": "Legitimate business volume change (FR-1301 #4)",
+  "fr1301_index": 4,
+  "severity": "medium",
+  "expected_verification": "not_verified",
+  "expected_outcome": "not_an_incident",
+  "expected_root_cause_category": null,
+  "required_evidence_tools": ["get_table_metrics"],
+  "forbidden_outcomes": ["diagnosed", "inconclusive"],
+  "specialist_participation": [],
+  "retrieval_behavior": "not_required",
+  "max_operational_calls": 8,
+  "escalation_expected": false,
+  "risk": {"data_sensitivity": "low", "high_impact": false},
+  "expected_risk_tier": "low",
+  "expected_release_status": "released",
+  "notes": "A marketing campaign doubled signups. The alert fired against a stale forecast (22000); the authoritative current metric carries the campaign-adjusted expectation (40800), so the observed 41200 is within tolerance and the alert condition is absent. FR-901 stops the investigation before a single hypothesis is generated — the system declines to find a fault rather than naming the least-bad category. No specialist runs, and no operational budget is spent."
+}

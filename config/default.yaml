@@ -1,0 +1,109 @@
+# Default configuration (NFR-001 reproducibility).
+# Deterministic policy values live here, outside model prompts (AD-004).
+
+verification:
+  # Relative tolerance when comparing observed vs expected during verification (FR-803).
+  relative_tolerance: 0.05
+
+budgets:
+  # Beam-search budgets (FR-702).
+  max_operational_calls: 8
+  max_rounds: 4
+  max_calls_per_task: 3          # FR-110 / FR-120
+  beam_width: 3                  # branches expanded per round
+  max_branch_depth: 4            # evidence-gathering cycles per branch
+  max_candidate_actions: 2       # candidate actions proposed per branch per round
+
+hypotheses:
+  min_count: 3                   # FR-401
+  max_count: 5
+
+reasoning:                       # AD-004 — which engine supplies judgment
+  # deterministic = offline rules (reproducible; what the test suite uses, FR-1304)
+  # llm          = a real model, for deployments and live demos
+  engine: deterministic
+
+  # openrouter -> needs OPENROUTER_API_KEY (has a free tier, which rate-limits hard)
+  # openai     -> needs OPENAI_API_KEY (paid, reliable; preferred for a live demo)
+  provider: openrouter
+
+  # Leave blank to take the provider's default endpoint and model.
+  # `uv run investigator models` lists what the configured key can actually call —
+  # OpenRouter's free roster in particular churns without notice.
+  model: ""
+  base_url: ""
+  temperature: 0.0               # nudge toward reproducibility; never a guarantee
+  max_tokens: 1200
+  timeout_seconds: 60.0
+  max_retries: 2                 # free models rate-limit often; 429/5xx are retried
+  on_failure: fallback           # fallback | fail_closed
+  max_payload_chars: 4000        # untrusted tool payloads are truncated (FR-1101)
+
+mcp:
+  transport: stdio               # M1 (§10.1); HTTP deferred
+  tool_timeout_seconds: 5.0      # FR-507
+  max_transport_retries: 1       # FR-507 (transient transport only)
+  max_result_items: 100          # bounded results (FR-507)
+
+stopping:
+  # FR-900: minimum independent current observations supporting the leading hypothesis.
+  min_supporting_current_observations: 2
+
+retrieval:                       # Milestone 2 (§11)
+  enabled: true
+  embed_dim: 512                 # deterministic hashing embedder dimensionality
+  top_k: 5                       # candidates surfaced before the trust gate (FR-602)
+  relevance_threshold: 0.12      # calibrated minimum cosine to be trust-gate eligible (FR-603)
+  max_staleness_days: 365        # documents older/last-reviewed beyond this are stale (FR-603)
+  permitted_types: [incident, runbook, schema]
+
+search:                          # Milestone 3 (§12)
+  enabled: true
+  prune_threshold: 5             # FR-704: branches scoring below this are pruned
+  min_diverse_branches: 2        # FR-704: diverse hypotheses held until each is tested
+
+monitoring:                      # FR-1205 — thresholds, owners, and responses
+  enabled: true
+  # Overrides merge over the defaults in observability/monitoring.py by metric name.
+  # `kind: policy` thresholds fail closed at critical: releases stop until cleared.
+  thresholds: {}
+    # grounding_failure_rate:
+    #   warning: 0.0
+    #   critical: 0.01
+    #   owner: data-platform-oncall
+    #   response: stop releasing diagnoses; investigate the grounding validator
+
+tracing:                         # M5.2 — LangSmith (FR-1200, FR-1204)
+  # Off by default so tests and reproducibility runs make no network calls
+  # (NFR-001, FR-1304). LANGSMITH_TRACING / LANGCHAIN_TRACING_V2 override this,
+  # and tracing stays off regardless unless LANGSMITH_API_KEY is set.
+  enabled: false
+  project: data-reliability-investigator
+  endpoint: ""                   # blank = LangSmith's host; set for self-hosted
+  # Enabling tracing exports prompts and tool payloads — untrusted alert and log
+  # content — to an external service. Set false to send shape, models, latency and
+  # token counts without the text.
+  include_prompts: true
+
+pricing:                         # FR-1203/FR-1302 — cost per investigation
+  # Per 1M tokens, keyed by model id. Deliberately empty: model prices change without
+  # warning, and a stale hard-coded price produces a confident wrong number. An unpriced
+  # model still reports its tokens and is named in the evaluation report, so a zero cost
+  # is never mistaken for a measurement.
+  # gpt-4o-mini:
+  #   input: 0.15
+  #   output: 0.60
+
+checkpoints:                     # FR-804
+  enabled: true
+  path: data/checkpoints/investigations.sqlite
+
+paths:
+  data_dir: data
+  scenarios_dir: data/scenarios
+  outputs_dir: outputs
+
+logging:
+  level: INFO
+  # Field names redacted from structured logs (FR-1202).
+  redact_fields: [password, token, secret, credential, api_key]

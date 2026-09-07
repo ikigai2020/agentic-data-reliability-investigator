@@ -1,0 +1,13 @@
+{
+  "incident_id": "INC-1001",
+  "dataset": "orders_fact",
+  "pipeline": "orders_daily",
+  "symptom_type": "volume_drop",
+  "observed_value": 12000,
+  "expected_value": 50000,
+  "observed_change_pct": -76.0,
+  "window_start": "2026-08-15T00:00:00Z",
+  "window_end": "2026-08-16T00:00:00Z",
+  "detected_at": "2026-08-16T02:00:00Z",
+  "severity": "high"
+}

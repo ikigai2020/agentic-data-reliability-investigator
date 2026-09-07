@@ -1,0 +1,39 @@
+{
+  "pipeline_run_status": {
+    "orders_daily": {
+      "schedule": "0 1 * * *",
+      "scheduled_start": "2026-08-16T01:00:00Z",
+      "actual_start": "2026-08-16T01:00:05Z",
+      "actual_end": "2026-08-16T01:12:30Z",
+      "duration_seconds": 745,
+      "state": "success",
+      "is_terminal": true
+    }
+  },
+  "task_failures": {
+    "orders_daily": { "failures": [] }
+  },
+  "execution_logs": {
+    "orders_daily": {
+      "events": [
+        {"timestamp": "2026-08-16T01:00:05Z", "level": "INFO", "task": "extract_orders", "message": "extracted 50000 source rows"},
+        {"timestamp": "2026-08-16T01:06:00Z", "level": "INFO", "task": "transform_orders", "message": "applied filter is_valid = true"},
+        {"timestamp": "2026-08-16T01:12:20Z", "level": "INFO", "task": "load_orders_fact", "message": "loaded 12000 rows"}
+      ]
+    }
+  },
+  "upstream_dependencies": {
+    "orders_daily": {
+      "dependencies": [
+        {"name": "orders_ingest", "state": "success", "last_success": "2026-08-16T00:45:00Z", "expected_by": "2026-08-16T01:00:00Z", "is_late": false}
+      ]
+    }
+  },
+  "processing_watermark": {
+    "orders_daily": {
+      "watermark": "2026-08-16T00:00:00Z",
+      "latest_event_time": "2026-08-16T00:00:00Z",
+      "lag_seconds": 3600.0
+    }
+  }
+}

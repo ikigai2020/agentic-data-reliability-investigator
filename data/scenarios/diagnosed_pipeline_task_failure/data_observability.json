@@ -1,0 +1,25 @@
+{
+  "table_metrics": {
+    "billing_fact": {
+      "row_count": 0,
+      "expected_row_count": 61000,
+      "freshness_seconds": 97200.0,
+      "last_loaded_at": "2026-08-22T03:05:00Z",
+      "null_rate": {"invoice_id": 0.0},
+      "duplicate_count": 0,
+      "distribution": {}
+    }
+  },
+  "quality_results": {
+    "billing_fact": {
+      "results": [
+        {"test_name": "not_null_invoice_id", "column": "invoice_id", "status": "pass", "observed_value": 0, "threshold": 0}
+      ]
+    }
+  },
+  "schema_changes": {
+    "billing_fact": {"from_version": "v5", "to_version": "v5", "changes": [], "breaking": false}
+  },
+  "reconciliation": {},
+  "transformation_changes": {"billing_daily": {"changes": []}}
+}
